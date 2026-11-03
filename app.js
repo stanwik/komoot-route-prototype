@@ -267,7 +267,7 @@ const REASONS = [
 ];
 
 /* ================= Pages + state in the URL ================= */
-// Each screen is its own page. ?state= picks the scenario (default cold_start); q, view, banner, from and switcher carry over.
+// Each screen is its own page. ?state= picks the scenario (default cold_start); q, view, banner, from, switcher and task carry over.
 const PAGE = document.body.dataset.page || "index";
 const PAGE_SCREEN = { index: "routes", search: "search", route: "detail", tips: "wps", report: "report", "report-received": "received", saved: "detail", "saved-route": "saved", navigation: "nav" };
 const STATE_IN = { cold_start: "cold", high: "high", low: "low", no_result: "no_result", error: "error", waiting: "waiting" };
@@ -281,8 +281,14 @@ const URLP = {
   from: P.get("from") === "saved" ? "saved" : null,
   run: P.get("run") === "1",
   clear: P.get("clear") === "1",
-  switcher: P.get("switcher") === "1"
+  switcher: P.get("switcher") === "1",
+  task: ["1", "2", "3"].includes(P.get("task")) ? P.get("task") : null
 };
+// Tag the Clarity session with the task and the state on every page load.
+if (typeof window.clarity === "function") {
+  if (URLP.task) window.clarity("set", "task", URLP.task);
+  window.clarity("set", "state", URLP.state);
+}
 const FROM_PAGES = ["tips", "report", "report-received"];
 function pageURL(page, extra = {}) {
   const u = new URLSearchParams();
@@ -295,6 +301,7 @@ function pageURL(page, extra = {}) {
   if (extra.clear) u.set("clear", "1");
   if (extra.run) u.set("run", "1");
   if (URLP.switcher) u.set("switcher", "1");
+  if (URLP.task) u.set("task", URLP.task);
   return `${page === "index" ? "index" : page}.html?${u.toString()}`;
 }
 let navigating = false;
@@ -776,7 +783,7 @@ function runSearch(q) {
 function applyState(v) {
   if (navigating) return;                           // switcher: load the routes list in that state, no animation
   navigating = true;
-  location.assign(`index.html?state=${STATE_OUT[v]}&switcher=1`);
+  location.assign(`index.html?state=${STATE_OUT[v]}&switcher=1${URLP.task ? `&task=${URLP.task}` : ""}`);
 }
 
 /* ================= Route saved sheet ================= */
