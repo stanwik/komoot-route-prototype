@@ -71,7 +71,7 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 #routesMap{inset:0}
 #routesMap .maplibregl-ctrl-bottom-left{bottom:478px}
 .screen.plain::before{content:"";position:absolute;top:0;left:0;right:0;height:54px;background:linear-gradient(var(--bg) 70%,rgba(245,243,235,0));z-index:55;pointer-events:none}
-.topbar{position:absolute;top:62px;left:16px;right:16px;display:flex;gap:8px;z-index:10}
+.topbar{position:absolute;top:62px;left:16px;right:16px;display:flex;gap:8px;z-index:18}
 .searchbar{flex:1;min-width:0;height:52px;border-radius:26px;display:flex;align-items:center}
 .searchbar .open-search{flex:1;min-width:0;height:100%;display:flex;align-items:center;gap:8px;padding:0 12px 0 14px;text-align:left;border-radius:26px;font-size:15.5px;letter-spacing:-.2px}
 .searchbar .open-search svg.i{width:20px;height:20px}
@@ -83,16 +83,24 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .plan-btn{flex:none;height:52px;padding:0 16px 0 12px;border-radius:26px;background:var(--plan);color:#fff;font-weight:600;font-size:17px;
   display:flex;align-items:center;gap:7px;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 0 0 .5px rgba(255,255,255,.35),0 6px 18px rgba(200,101,43,.35)}
 .plan-btn svg.i{stroke:#fff}
-.chips{position:absolute;top:124px;left:16px;right:16px;display:flex;gap:6px;z-index:10}
+.chips{position:absolute;top:124px;left:16px;right:16px;display:flex;gap:6px;z-index:18}
 .chip{height:38px;border-radius:19px;padding:0 12px;display:flex;align-items:center;gap:5px;font-size:14px;font-weight:500;white-space:nowrap;flex:none}
 .chip svg.i{width:18px;height:18px}
 .chip .hike{color:var(--orange)}
 .mapbtns{position:absolute;right:16px;top:232px;display:flex;flex-direction:column;gap:8px;z-index:10}
 .mapbtn{width:42px;height:42px;border-radius:21px}
 .mapbtn svg.i{width:20px;height:20px}
-.sheet{position:absolute;left:0;right:0;top:380px;bottom:0;background:var(--bg);border-radius:26px 26px 0 0;z-index:20;
+.sheet{position:absolute;left:0;right:0;top:170px;bottom:0;background:var(--bg);border-radius:26px 26px 0 0;z-index:20;transform:translateY(210px);will-change:transform;
   box-shadow:0 -4px 20px rgba(27,26,24,.10)}
-.sheet .scroll{padding:0 16px 110px}
+.sheet .scroll{padding:0 16px 110px;overscroll-behavior:contain}
+.sheet.snap{transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.sheet.dragging{user-select:none;-webkit-user-select:none}
+.mapcover{position:absolute;inset:0;background:var(--bg);opacity:0;pointer-events:none;z-index:15}
+.mapcover.blocking{pointer-events:auto}
+.mappill{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);height:44px;padding:0 18px 0 14px;border-radius:22px;background:var(--plan);color:#fff;font-weight:600;font-size:16px;display:none;align-items:center;gap:7px;z-index:35;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 0 0 .5px rgba(255,255,255,.35),0 6px 18px rgba(200,101,43,.35)}
+.mappill.show{display:flex}
+.mappill svg.i{width:20px;height:20px;stroke:#fff}
 .grabber{width:38px;height:5px;border-radius:3px;background:#CFC8B8;margin:8px auto 10px}
 .countline{text-align:center;color:var(--text2);font-size:15px;margin:2px 0 14px;line-height:1.35}
 .waitline{text-align:center;color:var(--text2);font-size:15px;margin:2px 0 14px}
@@ -107,37 +115,51 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .pill.outline{border:1.5px solid #CFC6B3;background:#fff}
 
 /* ---------- Route card ---------- */
-.card{display:block;width:100%;text-align:left;margin-bottom:22px;border-radius:18px}
-.card .photo{position:relative;height:220px;border-radius:16px;overflow:hidden;background:#C9CBB0}
+.card{display:block;width:100%;text-align:left;margin-bottom:16px;border-radius:12px;background:#FFFFFF;box-shadow:0 2px 10px rgba(27,26,24,.08)}
+.card .photo{position:relative;height:180px;border-radius:12px;overflow:hidden;background:#C9CBB0}
+.realphoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .photo svg.scene{position:absolute;inset:0;width:100%;height:100%}
 .chip-easy{position:absolute;left:12px;top:12px;background:#DDE0A6;color:#3E5210;font-size:13px;font-weight:600;padding:4px 9px;border-radius:7px}
 .dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:5px}
 .dots i{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.6)}
 .dots i.on{width:16px;background:#fff}
-.card .meta{padding:10px 2px 0}
+.card .meta{padding:10px 14px 14px}
 .rating{display:flex;align-items:center;gap:5px;font-size:14px;color:var(--text2)}
 .rating svg.star{width:16px;height:16px;fill:var(--orange);stroke:none}
-.card .title{font-size:19px;font-weight:600;margin:5px 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .title{font-size:16px;font-weight:600;color:#1A1A1A;margin:6px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .rating{font-size:13px}
+.card .rating svg.star{width:14px;height:14px}
+.card .stats{font-size:13px;color:#595959;margin-top:6px;gap:4px}
+.card .stats svg.i{width:14px;height:14px}
+.card .stats .sep{color:#595959}
+.cardai{margin-top:8px;border-top:1px solid #F3F2EF;padding-top:8px}
+.cardai.low{border-top-style:dashed}
+.cardai-label{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:400;color:#666666}
+.cardai-label .sparkle{width:9px;height:9px}
+.cardai-signal{font-size:12px;font-weight:500;color:#262626;line-height:1.4;padding-left:13px;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .stats{display:flex;align-items:center;gap:5px;font-size:15px;color:var(--text);flex-wrap:nowrap;white-space:nowrap}
 .stats svg.i{width:17px;height:17px}
 .stats .sep{color:var(--text2)}
 .aibox{margin-top:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px 11px}
 .aibox.low{border:1.5px dashed #8E7F69;background:#FBFAF6}
 .ailabel{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:3px}
-.sparkle{width:14px;height:14px;fill:var(--orange);flex:none}
+.sparkle{width:14px;height:14px;fill:#E5742A;flex:none}
 .signal{font-size:16px;line-height:1.35;color:var(--text)}
 .card .signal{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .card.inert{cursor:default}
 /* skeleton */
 .skel .photo{background:#DFDBD0}
-.skel .bar{height:13px;border-radius:7px;background:#E3DFD4;margin-top:10px}
+.skel .bar{height:12px;border-radius:6px;background:#E9E5DB;margin-top:8px}
+.skel .meta .bar:first-child{margin-top:0}
 .shimmer{position:relative;overflow:hidden}
 .shimmer::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-100%);animation:sh 1.4s infinite}
 @keyframes sh{to{transform:translateX(100%)}}
 @media (prefers-reduced-motion:reduce){.shimmer::after{animation:none}}
-.skel .airow{display:flex;align-items:center;gap:8px;margin-top:10px}
+.skel .airow{display:flex;align-items:center;gap:6px;margin-top:10px}
 .skel .airow .bar{margin:0;flex:1}
-.skel .sparkle{fill:#E0A27C}
+.skel .sparkle{width:12px;height:12px;transform-origin:50% 50%;animation:spin 1.5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.skel .sparkle{animation:none}}
 
 /* ---------- Route detail / saved ---------- */
 .hero{position:relative;height:254px;background:#9FB3C0}
@@ -331,9 +353,11 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
       <button class="mapbtn glass icon-btn" data-action="noop" aria-label="My location"><svg class="i" viewBox="0 0 24 24"><use href="#ic-locate"/></svg></button>
       <button class="mapbtn glass icon-btn" data-action="noop" aria-label="Map layers"><svg class="i" viewBox="0 0 24 24"><use href="#ic-layers"/></svg></button>
     </div>
-    <div class="sheet">
+    <div class="mapcover" id="mapCover"></div>
+    <div class="sheet" id="routesSheetWrap">
       <div class="scroll" id="routesSheet"></div>
     </div>
+    <button class="mappill" id="mapPill" data-action="map-pill"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-map"/></svg>Map</button>
     <div class="tabslot"></div>
   </section>
 
@@ -341,7 +365,7 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
   <section class="screen" id="detail" tabindex="-1" aria-label="Route detail">
     <div class="scroll" id="detailScroll">
       <div class="hero">
-        <div class="photo-fill" data-scene="river" data-seed="7"></div>
+        <div class="photo-fill" data-scene="river" data-seed="7"><img class="realphoto" src="images/detail-hero.jpg" alt="" onerror="this.remove()"></div>
         <button class="roundbtn glass icon-btn tl" data-action="back" aria-label="Back"><svg class="i" viewBox="0 0 24 24"><use href="#ic-back"/></svg></button>
         <div class="tr glass"><button class="icon-btn" data-action="noop" aria-label="Share"><svg class="i" viewBox="0 0 24 24"><use href="#ic-share"/></svg></button><button class="icon-btn" data-action="noop" aria-label="More options"><svg class="i" viewBox="0 0 24 24"><use href="#ic-more"/></svg></button></div>
         <div class="photocount" data-slot="photocount"></div>
@@ -362,7 +386,7 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
   <section class="screen" id="saved" tabindex="-1" aria-label="Saved route">
     <div class="scroll" id="savedScroll">
       <div class="hero">
-        <div class="photo-fill" data-scene="lake" data-seed="3"></div>
+        <div class="photo-fill" data-scene="lake" data-seed="3"><img class="realphoto" src="images/saved-hero.jpg" alt="" onerror="this.remove()"></div>
         <button class="roundbtn glass icon-btn tl" data-action="back" aria-label="Back"><svg class="i" viewBox="0 0 24 24"><use href="#ic-back"/></svg></button>
         <div class="tr glass"><button class="icon-btn" data-action="noop" aria-label="Share"><svg class="i" viewBox="0 0 24 24"><use href="#ic-share"/></svg></button><button class="icon-btn" data-action="noop" aria-label="More options"><svg class="i" viewBox="0 0 24 24"><use href="#ic-more"/></svg></button></div>
         <div class="photocount" data-slot="photocount"></div>
@@ -444,10 +468,10 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
       <div class="examples">
         <h2>Describe the route you want</h2>
         <p>Tap an example or type your own.</p>
-        <button class="ex" data-action="example" data-q="Quiet hike along the water"><span class="thumb-img" data-scene="lake" data-seed="11"></span>Quiet hike along the water</button>
-        <button class="ex inert" data-action="noop"><span class="thumb-img" data-scene="reeds" data-seed="12"></span>Short loop with a café stop</button>
-        <button class="ex inert" data-action="noop"><span class="thumb-img" data-scene="forest" data-seed="13"></span>Forest walk under 2 hours</button>
-        <button class="ex inert" data-action="noop"><span class="thumb-img" data-scene="river" data-seed="14"></span>Easy walk with views of the city</button>
+        <button class="ex" data-action="example" data-q="Quiet hike along the water"><span class="thumb-img" data-scene="lake" data-seed="11"><img class="realphoto" src="images/example-1.jpg" alt="" onerror="this.remove()"></span>Quiet hike along the water</button>
+        <button class="ex inert" data-action="noop"><span class="thumb-img" data-scene="reeds" data-seed="12"><img class="realphoto" src="images/example-2.jpg" alt="" onerror="this.remove()"></span>Short loop with a café stop</button>
+        <button class="ex inert" data-action="noop"><span class="thumb-img" data-scene="forest" data-seed="13"><img class="realphoto" src="images/example-3.jpg" alt="" onerror="this.remove()"></span>Forest walk under 2 hours</button>
+        <button class="ex inert" data-action="noop"><span class="thumb-img" data-scene="river" data-seed="14"><img class="realphoto" src="images/example-4.jpg" alt="" onerror="this.remove()"></span>Easy walk with views of the city</button>
       </div>
     </div>
   </section>
@@ -465,9 +489,9 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
       <div class="toggle-row"><span id="offlineLbl">Save offline</span><button class="switch" role="switch" aria-checked="false" aria-labelledby="offlineLbl" data-action="noop"></button></div>
       <div class="eventcard">
         <div class="row">
-          <svg width="74" height="62" viewBox="0 0 74 62" aria-hidden="true" style="flex:none">
-            <g transform="rotate(-6 24 22)"><rect x="2" y="6" width="44" height="34" rx="6" fill="#fff"/><rect x="5" y="9" width="38" height="28" rx="4" fill="#9CC0DA"/><path d="M5 28 Q16 20 26 26 T43 24 V33 Q43 37 39 37 H9 Q5 37 5 33Z" fill="#6E8A3E"/></g>
-            <g transform="rotate(5 50 40)"><rect x="26" y="22" width="44" height="36" rx="6" fill="#fff"/><rect x="29" y="25" width="38" height="30" rx="4" fill="#E4E6C4"/><path d="M29 44 Q40 38 48 46 T67 42" stroke="#B0B889" stroke-width="6" fill="none"/></g>
+          <svg width="74" height="62" viewBox="0 0 74 62" aria-hidden="true" style="flex:none"><defs><clipPath id="evclip1"><rect x="5" y="9" width="38" height="28" rx="4"/></clipPath><clipPath id="evclip2"><rect x="29" y="25" width="38" height="30" rx="4"/></clipPath></defs>
+            <g transform="rotate(-6 24 22)"><rect x="2" y="6" width="44" height="34" rx="6" fill="#fff"/><rect x="5" y="9" width="38" height="28" rx="4" fill="#9CC0DA"/><path d="M5 28 Q16 20 26 26 T43 24 V33 Q43 37 39 37 H9 Q5 37 5 33Z" fill="#6E8A3E"/><image href="images/event.jpg" x="5" y="9" width="38" height="28" preserveAspectRatio="xMidYMid slice" clip-path="url(#evclip1)"/></g>
+            <g transform="rotate(5 50 40)"><rect x="26" y="22" width="44" height="36" rx="6" fill="#fff"/><rect x="29" y="25" width="38" height="30" rx="4" fill="#E4E6C4"/><path d="M29 44 Q40 38 48 46 T67 42" stroke="#B0B889" stroke-width="6" fill="none"/><image href="images/event.jpg" x="29" y="25" width="38" height="30" preserveAspectRatio="xMinYMax slice" clip-path="url(#evclip2)"/></g>
             <path d="M48 26c-5 0-8 3.6-8 7.8 0 5.6 8 13.2 8 13.2s8-7.6 8-13.2C56 29.6 53 26 48 26z" fill="#FC5D00"/><circle cx="48" cy="34" r="3" fill="#fff"/>
           </svg>
           <div><b>Turn it into a public event</b><span>Choose a date and meeting spot. Everyone can join!</span></div>
@@ -513,7 +537,8 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
     <symbol id="ic-thumbup" viewBox="0 0 24 24"><path d="M7 11v9.5H3.5V11z"/><path d="M7 11l4-7.5c1.6 0 2.7 1.2 2.4 2.8L12.8 10h5.6a2 2 0 0 1 2 2.4l-1.3 6.4a2 2 0 0 1-2 1.7H7"/></symbol>
     <symbol id="ic-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
     <symbol id="ic-arrowup" viewBox="0 0 24 24"><path d="M12 21V4M5 11l7-7 7 7"/></symbol>
-    <symbol id="ic-sparkle" viewBox="0 0 24 24"><path d="M12 1.5c.7 5.6 3.3 8.7 10.5 10.5-7.2 1.8-9.8 4.9-10.5 10.5-.7-5.6-3.3-8.7-10.5-10.5C8.7 10.2 11.3 7.1 12 1.5z"/></symbol>
+    <symbol id="ic-sparkle" viewBox="0 0 24 24"><path d="M9.5 5C10.2 10.6 12.4 12.8 18 13.5 12.4 14.2 10.2 16.4 9.5 22 8.8 16.4 6.6 14.2 1 13.5 6.6 12.8 8.8 10.6 9.5 5Z"/><path d="M18.5 1C18.8 3.6 19.9 4.7 22.5 5 19.9 5.3 18.8 6.4 18.5 9 18.2 6.4 17.1 5.3 14.5 5 17.1 4.7 18.2 3.6 18.5 1Z"/></symbol>
+    <symbol id="ic-map" viewBox="0 0 24 24"><path d="M3.5 6.5 9 4.5l6 2 5.5-2v13l-5.5 2-6-2-5.5 2z"/><path d="M9 4.5v13M15 6.5v13"/></symbol>
     <symbol id="ic-sun" viewBox="0 0 24 24"><path d="M4 16a8 8 0 0 1 16 0z" fill="#FC5D00"/><path d="M12 4v3M5.5 7l2 2M18.5 7l-2 2M2.5 12.5h2.5M19 12.5h2.5" stroke="#FC5D00" stroke-width="1.8" stroke-linecap="round"/><path d="M2 18.5h20" stroke="#FC5D00" stroke-width="1.8" stroke-linecap="round"/></symbol>
   </defs>
 </svg>
@@ -537,6 +562,12 @@ const SCENES = {
   "Treptower Park loop": ["river", 5],
   "Spree riverside walk": ["reeds", 8],
   "Rummelsburger See and Plänterwald trails": ["forest", 9]
+};
+const PHOTOS = {
+  "Rummelsburger Bay loop": "route-rummelsburger-bay-loop.jpg",
+  "Treptower Park loop": "route-treptower-park-loop.jpg",
+  "Spree riverside walk": "route-spree-riverside-walk.jpg",
+  "Rummelsburger See and Plänterwald trails": "route-rummelsburger-see-plaenterwald.jpg"
 };
 const AVATAR_COLORS = ["#5C6F2B", "#8A5A3C", "#3F6E8C", "#6B5B95", "#9A6B1F"];
 const REASONS = [
@@ -650,6 +681,12 @@ function statsLine(r) {
 function ratingLine(r) {
   return `<div class="rating">${starIcon()}<span>${fmtDec(r.rating, 1)}</span><span>·</span><span>${fmtThousands(r.rating_count)}</span></div>`;
 }
+function cardAi(ai, low) {
+  return `<span class="cardai${low ? " low" : ""}" style="display:block">
+    <span class="cardai-label">${sparkle()}<span>${esc(aiLabel(ai, low))}</span></span>
+    <span class="cardai-signal">${esc(ai.signal)}</span>
+  </span>`;
+}
 function routeCard(r, low, showAi) {
   const [scene, seed] = SCENES[r.title] || ["river", 2];
   const active = r.title === ACTIVE_ROUTE;
@@ -657,6 +694,7 @@ function routeCard(r, low, showAi) {
   const attrs = active ? `data-action="open-route" aria-label="${esc(r.title)}, open route"` : "";
   return `<${tag} class="card${active ? "" : " inert"}" ${attrs}>
     <span class="photo" style="display:block" data-scene="${scene}" data-seed="${seed}">
+      ${PHOTOS[r.title] ? `<img class="realphoto" src="images/${PHOTOS[r.title]}" alt="" onerror="this.remove()">` : ""}
       ${r.difficulty ? `<span class="chip-easy">${esc(r.difficulty)}</span>` : ""}
       <span class="dots"><i class="on"></i><i></i><i></i></span>
     </span>
@@ -664,15 +702,14 @@ function routeCard(r, low, showAi) {
       ${ratingLine(r)}
       <div class="title">${esc(r.title)}</div>
       ${statsLine(r)}
-      ${showAi && r.ai ? aiBox(r.ai, low) : ""}
+      ${showAi && r.ai ? cardAi(r.ai, low) : ""}
     </span>
   </${tag}>`;
 }
 function skeletonCard() {
   return `<div class="card skel" aria-hidden="true"><div class="photo shimmer"></div>
-    <div class="bar shimmer" style="width:60%"></div>
-    <div class="airow">${sparkle()}<div class="bar shimmer"></div></div>
-    <div class="bar shimmer" style="width:45%"></div></div>`;
+    <div class="meta"><div class="bar shimmer" style="width:30%"></div><div class="bar shimmer" style="width:60%"></div><div class="bar shimmer" style="width:50%"></div>
+    <div class="airow">${sparkle()}<div class="bar shimmer"></div></div></div></div>`;
 }
 
 /* ================= Routes list ================= */
@@ -718,7 +755,7 @@ function renderRoutesSheet() {
 function renderRoutes(resetScroll = true) {
   renderSearchbar();
   renderRoutesSheet();
-  if (resetScroll) $("#routesSheet").scrollTop = 0;
+  if (resetScroll) { $("#routesSheet").scrollTop = 0; setSheet(SHEET_MAX, false); }
   updateMarkers();
 }
 
@@ -955,6 +992,7 @@ const actions = {
   example(el) { runSearch(el.dataset.q); },
   cancel() { clearTimers(); S.view = "cancelled"; renderRoutes(); },
   "try-again"() { runSearch(S.query); },
+  "map-pill"() { setSheet(SHEET_MAX, true); $("#routesSheet").scrollTop = 0; $("#routes").focus(); },
   dismiss() { S.bannerOpen = false; renderRoutesSheet(); $("#routesSheet").focus(); },
   "open-route"() {
     const p = S.data[payloadFor(S.view)];
@@ -994,6 +1032,107 @@ $("#searchForm").addEventListener("submit", e => {
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && $("#saveOverlay").classList.contains("open")) closeSheet(true);
 });
+
+/* ================= Bottom sheet: pull up over the map, then scroll ================= */
+const SHEET_MAX = 210;               // offset when collapsed (sheet top at 380); 0 = top position under the chips
+let sheetOff = SHEET_MAX;
+function setSheet(off, animate) {
+  sheetOff = Math.max(0, Math.min(SHEET_MAX, off));
+  const sh = $("#routesSheetWrap"), cover = $("#mapCover");
+  sh.classList.toggle("snap", !!animate);
+  sh.style.transform = `translateY(${sheetOff}px)`;
+  cover.style.transition = animate ? "opacity .3s" : "none";
+  cover.style.opacity = String(1 - sheetOff / SHEET_MAX);
+  cover.classList.toggle("blocking", sheetOff < SHEET_MAX);
+  $("#mapPill").classList.toggle("show", sheetOff === 0);
+}
+function settle(startOff, lastDy, speed) {
+  if (sheetOff === 0 || sheetOff === SHEET_MAX) return;
+  const moved = Math.abs(sheetOff - startOff);
+  let up;
+  if ((moved > 30 || speed > 0.3) && lastDy) up = lastDy < 0;        // follow the last direction
+  else up = startOff === 0 ? true : startOff === SHEET_MAX ? false : sheetOff < SHEET_MAX / 2;
+  setSheet(up ? 0 : SHEET_MAX, true);
+}
+// dy > 0: finger/mouse moves down (content follows). Moves the sheet first, then the list.
+function dragBy(dy) {
+  const sc = $("#routesSheet");
+  if (dy < 0) {
+    const use = Math.min(-dy, sheetOff);
+    if (use) setSheet(sheetOff - use);
+    const rest = -dy - use;
+    if (rest) sc.scrollTop += rest;
+  } else if (dy > 0) {
+    const use = Math.min(dy, sc.scrollTop);
+    if (use) sc.scrollTop -= use;
+    const rest = dy - use;
+    if (rest) setSheet(sheetOff + rest);
+  }
+}
+(function initSheet() {
+  const sh = $("#routesSheetWrap"), sc = $("#routesSheet");
+  // Mouse wheel and trackpad
+  let wStart = null, wTimer = 0, wLast = 0;
+  sh.addEventListener("wheel", e => {
+    let dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 600 : 1);
+    if (!((dy > 0 && sheetOff > 0) || (dy < 0 && sc.scrollTop <= 0 && sheetOff < SHEET_MAX))) return;
+    e.preventDefault();
+    if (wStart === null) wStart = sheetOff;
+    sh.classList.remove("snap");
+    setSheet(sheetOff - dy);
+    wLast = -dy;
+    clearTimeout(wTimer);
+    wTimer = setTimeout(() => { settle(wStart, wLast, 0); wStart = null; }, 150);
+  }, { passive: false });
+
+  // Touch
+  let t = null;
+  sh.addEventListener("touchstart", e => {
+    if (e.touches.length !== 1) { t = null; return; }
+    const y = e.touches[0].clientY;
+    t = { lastY: y, lastT: e.timeStamp, startOff: sheetOff, mode: null, lastDy: 0, v: 0 };
+  }, { passive: true });
+  sh.addEventListener("touchmove", e => {
+    if (!t) return;
+    const y = e.touches[0].clientY, dy = y - t.lastY;
+    if (!dy) return;
+    if (!t.mode) t.mode = ((dy < 0 && sheetOff > 0) || (dy > 0 && sc.scrollTop <= 80 && sheetOff < SHEET_MAX)) ? "sheet" : "native";
+    if (t.mode !== "sheet") return;
+    e.preventDefault();
+    sh.classList.remove("snap");
+    dragBy(dy);
+    const dt = Math.max(1, e.timeStamp - t.lastT);
+    t.v = Math.abs(dy) / dt; t.lastDy = dy; t.lastY = y; t.lastT = e.timeStamp;
+  }, { passive: false });
+  const touchEnd = () => { if (t && t.mode === "sheet") settle(t.startOff, t.lastDy, t.v); t = null; };
+  sh.addEventListener("touchend", touchEnd);
+  sh.addEventListener("touchcancel", touchEnd);
+
+  // Mouse drag
+  let m = null, swallowClick = false;
+  sh.addEventListener("pointerdown", e => {
+    if (e.pointerType !== "mouse" || e.button !== 0) return;
+    m = { y: e.clientY, lastY: e.clientY, lastT: e.timeStamp, startOff: sheetOff, total: 0, lastDy: 0, v: 0 };
+  });
+  window.addEventListener("pointermove", e => {
+    if (!m || e.pointerType !== "mouse") return;
+    const dy = e.clientY - m.lastY;
+    if (!dy) return;
+    m.total += Math.abs(dy);
+    if (m.total > 5) { sh.classList.add("dragging"); sh.classList.remove("snap"); }
+    else return;
+    dragBy(dy);
+    const dt = Math.max(1, e.timeStamp - m.lastT);
+    m.v = Math.abs(dy) / dt; m.lastDy = dy; m.lastY = e.clientY; m.lastT = e.timeStamp;
+  });
+  window.addEventListener("pointerup", () => {
+    if (!m) return;
+    if (m.total > 5) { swallowClick = true; setTimeout(() => { swallowClick = false; }, 0); settle(m.startOff, m.lastDy, m.v); }
+    sh.classList.remove("dragging");
+    m = null;
+  });
+  sh.addEventListener("click", e => { if (swallowClick) { e.stopPropagation(); e.preventDefault(); swallowClick = false; } }, true);
+})();
 
 /* ================= Boot ================= */
 fillScenes();
