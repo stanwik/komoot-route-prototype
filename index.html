@@ -8,7 +8,7 @@
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <style>
 :root{
-  --green:#4F6814; --green-dark:#3B4A10; --orange:#FC5D00; --plan:#C8652B;
+  --green:#4F6814; --green-dark:#3B4A10; --orange:#FF5F00; --plan:#FF5F00;
   --bg:#F5F3EB; --text:#1B1A18; --text2:#756452; --line:#E2DCCD;
   --card:#FFFFFF; --beige:#E8DCC3; --land:#E4E6C4; --route:#2B6BEA;
   --font:-apple-system,"SF Pro Text",system-ui,sans-serif;
@@ -81,7 +81,7 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .icon-btn{display:inline-flex;align-items:center;justify-content:center;flex:none}
 .searchbar .clear{width:44px;height:44px;border-radius:22px;margin-right:4px;color:var(--text2)}
 .plan-btn{flex:none;height:52px;padding:0 16px 0 12px;border-radius:26px;background:var(--plan);color:#fff;font-weight:600;font-size:17px;
-  display:flex;align-items:center;gap:7px;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 0 0 .5px rgba(255,255,255,.35),0 6px 18px rgba(200,101,43,.35)}
+  display:flex;align-items:center;gap:7px;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 0 0 .5px rgba(255,255,255,.35),0 6px 18px rgba(255,95,0,.35)}
 .plan-btn svg.i{stroke:#fff}
 .chips{position:absolute;top:124px;left:16px;right:16px;display:flex;gap:6px;z-index:18}
 .chip{height:38px;border-radius:19px;padding:0 12px;display:flex;align-items:center;gap:5px;font-size:14px;font-weight:500;white-space:nowrap;flex:none}
@@ -98,7 +98,7 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .mapcover{position:absolute;inset:0;background:var(--bg);opacity:0;pointer-events:none;z-index:15}
 .mapcover.blocking{pointer-events:auto}
 .mappill{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);height:44px;padding:0 18px 0 14px;border-radius:22px;background:var(--plan);color:#fff;font-weight:600;font-size:16px;display:none;align-items:center;gap:7px;z-index:35;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 0 0 .5px rgba(255,255,255,.35),0 6px 18px rgba(200,101,43,.35)}
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 0 0 .5px rgba(255,255,255,.35),0 6px 18px rgba(255,95,0,.35)}
 .mappill.show{display:flex}
 .mappill svg.i{width:20px;height:20px;stroke:#fff}
 .grabber{width:38px;height:5px;border-radius:3px;background:#CFC8B8;margin:8px auto 10px}
@@ -123,28 +123,30 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .dots i{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.6)}
 .dots i.on{width:16px;background:#fff}
 .card .meta{padding:10px 14px 14px}
-.rating{display:flex;align-items:center;gap:5px;font-size:14px;color:var(--text2)}
-.rating svg.star{width:16px;height:16px;fill:var(--orange);stroke:none}
+.rating{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--text2)}
+.rpair{display:inline-flex;align-items:center;gap:4px}
+.rating svg.star,.rating svg.people{width:15px;height:15px;color:#FF5F00;flex:none}
+.detail-body .rating{font-size:15px}
 .card .title{font-size:16px;font-weight:600;color:#1A1A1A;margin:6px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card .rating{font-size:13px}
-.card .rating svg.star{width:14px;height:14px}
+.card .rating svg.star,.card .rating svg.people{width:14px;height:14px}
 .card .stats{font-size:13px;color:#595959;margin-top:6px;gap:4px}
 .card .stats svg.i{width:14px;height:14px}
 .card .stats .sep{color:#595959}
 .cardai{margin-top:8px;border-top:1px solid #F3F2EF;padding-top:8px}
 .cardai.low{border-top-style:dashed}
-.cardai-label{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:400;color:#666666}
-.cardai-label .sparkle{width:14px;height:14px}
-.cardai-signal{font-size:13px;font-weight:500;color:#262626;line-height:1.4;padding-left:18px;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ailabelrow{display:flex;align-items:center;gap:6px}
+.aipill{display:inline-flex;align-items:center;gap:2px;background:rgba(255,95,0,.1);border-radius:999px;padding:2px 5px 2px 4px;font-size:11px;font-weight:500;color:#FF5F00;line-height:1.2;flex:none}
+.aipill .sparkle{width:11.25px;height:11.25px}
+.aibased{font-size:11px;font-weight:400;color:#666666;line-height:1.2}
+.cardai-signal{font-size:13px;font-weight:500;color:#262626;line-height:1.4;padding-left:0;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .stats{display:flex;align-items:center;gap:5px;font-size:15px;color:var(--text);flex-wrap:nowrap;white-space:nowrap}
 .stats svg.i{width:17px;height:17px}
 .stats .sep{color:var(--text2)}
 .aibox{margin-top:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px 11px}
 .aibox.low{border:1.5px dashed #8E7F69;background:#FBFAF6}
-.ailabel{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:3px}
-.sparkle{width:16px;height:16px;fill:#E5742A;flex:none}
-.ai-word{color:#E5742A}
-.signal{font-size:16px;line-height:1.35;color:var(--text)}
+.sparkle{width:16px;height:16px;color:#FF5F00;fill:currentColor;flex:none}
+.signal{font-size:13px;font-weight:500;line-height:1.4;color:#262626;margin-top:6px}
 .card .signal{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .card.inert{cursor:default}
 /* skeleton */
@@ -188,7 +190,6 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .typeline{display:flex;gap:18px;font-size:16px;align-items:center;margin-bottom:10px}
 .typeline span{display:flex;align-items:center;gap:6px}
 .detail-body .aibox{margin:4px 0 16px;padding:11px 14px 13px}
-.detail-body .signal{font-size:17px}
 .seetips{margin-top:10px;height:36px;padding:0 14px;border-radius:18px;background:#fff;border:1.5px solid #CFC6B3;font-size:15px;font-weight:600;display:inline-flex;align-items:center;gap:2px}
 .seetips svg.i{width:16px;height:16px}
 .statgrid{display:grid;grid-template-columns:1fr 1fr;row-gap:14px;column-gap:16px;margin-top:6px}
@@ -210,8 +211,7 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .backbtn{width:44px;height:44px;border-radius:22px;background:#E7E2D5;color:var(--text)}
 .page h1{font-size:28px;line-height:1.15;margin:18px 0 4px;font-weight:700}
 .page .sub{color:var(--text2);font-size:16px;margin:0 0 16px}
-.wps-label{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text2)}
-.wps-signal{font-size:22px;line-height:1.3;font-weight:600;margin:4px 0 16px}
+.wps-signal{font-size:13px;line-height:1.4;font-weight:500;color:#262626;margin:6px 0 16px}
 .wps-ai.low{border:1.5px dashed #8E7F69;border-radius:14px;padding:10px 12px;margin-bottom:16px}
 .wps-ai.low .wps-signal{margin-bottom:0}
 .tip{display:flex;align-items:center;gap:4px;width:100%;text-align:left;background:var(--card);border-radius:16px;padding:14px 8px 14px 12px;margin-bottom:10px}
@@ -437,7 +437,7 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
         <path d="M80 84 L76 100 L96 84Z" fill="#fff"/>
         <circle cx="103" cy="53" r="18" fill="#4F6814"/>
         <path d="M94 53 l6 6 l12 -12" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M158 30 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#FC5D00"/>
+        <use href="#ic-sparkle" x="148" y="20" width="24" height="24" style="color:#FF5F00"/>
       </svg>
       <h1>Report received</h1>
       <p>Thanks for telling us. Your report helps keep route summaries accurate for everyone.</p>
@@ -503,7 +503,7 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
           <svg width="74" height="62" viewBox="0 0 74 62" aria-hidden="true" style="flex:none"><defs><clipPath id="evclip1"><rect x="5" y="9" width="38" height="28" rx="4"/></clipPath></defs>
             <g transform="rotate(-6 24 22)"><rect x="2" y="6" width="44" height="34" rx="6" fill="#fff"/><rect x="5" y="9" width="38" height="28" rx="4" fill="#9CC0DA"/><path d="M5 28 Q16 20 26 26 T43 24 V33 Q43 37 39 37 H9 Q5 37 5 33Z" fill="#6E8A3E"/><image href="images/meadow-path.jpg" x="5" y="9" width="38" height="28" preserveAspectRatio="xMidYMid slice" clip-path="url(#evclip1)"/></g>
             <g transform="rotate(5 50 40)"><rect x="26" y="22" width="44" height="36" rx="6" fill="#fff"/><rect x="29" y="25" width="38" height="30" rx="4" fill="#E4E6C4"/><path d="M29 44 Q40 38 48 46 T67 42" stroke="#B0B889" stroke-width="6" fill="none"/></g>
-            <path d="M48 26c-5 0-8 3.6-8 7.8 0 5.6 8 13.2 8 13.2s8-7.6 8-13.2C56 29.6 53 26 48 26z" fill="#FC5D00"/><circle cx="48" cy="34" r="3" fill="#fff"/>
+            <path d="M48 26c-5 0-8 3.6-8 7.8 0 5.6 8 13.2 8 13.2s8-7.6 8-13.2C56 29.6 53 26 48 26z" fill="#FF5F00"/><circle cx="48" cy="34" r="3" fill="#fff"/>
           </svg>
           <div><b>Turn it into a public event</b><span>Choose a date and meeting spot. Everyone can join!</span></div>
         </div>
@@ -538,7 +538,8 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
     <symbol id="ic-share" viewBox="0 0 24 24"><path d="M12 15V3.5M8 7.5l4-4 4 4M7 11H5.5v9.5h13V11H17"/></symbol>
     <symbol id="ic-more" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="18" cy="12" r="1.6" fill="currentColor"/></symbol>
     <symbol id="ic-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M4 17l5-4.5 3.5 3 3-2.5 4.5 4"/></symbol>
-    <symbol id="ic-star" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></symbol>
+    <symbol id="ic-star" viewBox="0 0 24 24"><path fill="currentColor" d="M10.8 2.2L8.4 7.95l-6.21.5a1.2 1.2 0 0 0-.74 2.28l4.73 4.06-1.44 6.06a1.2 1.2 0 0 0 1.94 1.41L12 19.02l5.32 3.24a1.2 1.2 0 0 0 1.94-1.41l-1.44-6.06 4.73-4.06a1.2 1.2 0 0 0-.74-2.28l-6.21-.5-2.4-5.75a1.3 1.3 0 0 0-2.4 0Z"/></symbol>
+    <symbol id="ic-people" viewBox="0 0 24 24"><circle cx="8.2" cy="7.4" r="4.4" fill="currentColor"/><path fill="currentColor" d="M1.2 19.6C1.2 15.6 4.3 13.4 8.2 13.4s7 2.2 7 6.2V21H1.2Z"/><path d="M16.4 3.4c1.9.9 3.1 2.7 3.1 4.7 0 1.9-1 3.5-2.6 4.4M19.4 15.1c2 1 3.2 2.7 3.4 4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
     <symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M10 2.5h4"/></symbol>
     <symbol id="ic-dist" viewBox="0 0 24 24"><path d="M3.5 12h17M7 8.5 3.5 12 7 15.5M17 8.5l3.5 3.5-3.5 3.5"/></symbol>
     <symbol id="ic-up" viewBox="0 0 24 24"><path d="M6 18 18 6M9 6h9v9"/></symbol>
@@ -548,9 +549,9 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
     <symbol id="ic-thumbup" viewBox="0 0 24 24"><path d="M7 11v9.5H3.5V11z"/><path d="M7 11l4-7.5c1.6 0 2.7 1.2 2.4 2.8L12.8 10h5.6a2 2 0 0 1 2 2.4l-1.3 6.4a2 2 0 0 1-2 1.7H7"/></symbol>
     <symbol id="ic-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
     <symbol id="ic-arrowup" viewBox="0 0 24 24"><path d="M12 21V4M5 11l7-7 7 7"/></symbol>
-    <symbol id="ic-sparkle" viewBox="0 0 24 24"><path d="M12 1.5c.7 5.6 3.3 8.7 10.5 10.5-7.2 1.8-9.8 4.9-10.5 10.5-.7-5.6-3.3-8.7-10.5-10.5C8.7 10.2 11.3 7.1 12 1.5z"/></symbol>
+    <symbol id="ic-sparkle" viewBox="0 0 15 15"><path fill="currentColor" d="M5.22 3.62L4.96 4.56 4.62 5.37 4.19 6.07 3.68 6.68 3.07 7.19 2.37 7.62 1.56 7.96.62 8.22.34 8.35.13 8.56.01 8.85 0 9 .06 9.3.22 9.56.34 9.65.62 9.78 1.56 10.04 2.37 10.38 3.07 10.81 3.68 11.32 4.19 11.93 4.62 12.63 4.96 13.44 5.22 14.38 5.35 14.66 5.44 14.78 5.7 14.94 6 15 6.3 14.94 6.56 14.78 6.65 14.66 6.78 14.38 7.04 13.44 7.38 12.63 7.81 11.93 8.32 11.32 8.93 10.81 9.63 10.38 10.44 10.04 11.38 9.78 11.66 9.65 11.78 9.56 11.94 9.3 12 9 11.99 8.85 11.87 8.56 11.66 8.35 11.38 8.22 10.44 7.96 9.63 7.62 8.93 7.19 8.32 6.68 7.81 6.07 7.38 5.37 7.04 4.56 6.73 3.47 6.56 3.22 6.44 3.13 6.15 3.01 5.85 3.01 5.7 3.06 5.56 3.13 5.35 3.34Z"/><path fill="currentColor" d="M11.21 1.15L11.04 1.66 10.9 1.99 10.73 2.28 10.52 2.52 10.28 2.73 9.99 2.9 9.15 3.21 9.03 3.37 9 3.5 9.03 3.63 9.15 3.79 9.99 4.1 10.28 4.27 10.52 4.48 10.73 4.72 10.9 5.01 11.21 5.85 11.3 5.94 11.5 6 11.7 5.94 11.79 5.85 12.1 5.01 12.27 4.72 12.48 4.48 12.72 4.27 13.01 4.1 13.85 3.79 13.97 3.63 14 3.5 13.97 3.37 13.85 3.21 13.01 2.9 12.72 2.73 12.4 2.45 12.1 1.99 11.96 1.66 11.83 1.21 11.7 1.06 11.57 1.01 11.37 1.03Z"/></symbol>
     <symbol id="ic-map" viewBox="0 0 24 24"><path d="M3.5 6.5 9 4.5l6 2 5.5-2v13l-5.5 2-6-2-5.5 2z"/><path d="M9 4.5v13M15 6.5v13"/></symbol>
-    <symbol id="ic-sun" viewBox="0 0 24 24"><path d="M4 16a8 8 0 0 1 16 0z" fill="#FC5D00"/><path d="M12 4v3M5.5 7l2 2M18.5 7l-2 2M2.5 12.5h2.5M19 12.5h2.5" stroke="#FC5D00" stroke-width="1.8" stroke-linecap="round"/><path d="M2 18.5h20" stroke="#FC5D00" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="ic-sun" viewBox="0 0 24 24"><path d="M4 16a8 8 0 0 1 16 0z" fill="#FF5F00"/><path d="M12 4v3M5.5 7l2 2M18.5 7l-2 2M2.5 12.5h2.5M19 12.5h2.5" stroke="#FF5F00" stroke-width="1.8" stroke-linecap="round"/><path d="M2 18.5h20" stroke="#FF5F00" stroke-width="1.8" stroke-linecap="round"/></symbol>
   </defs>
 </svg>
 
@@ -607,10 +608,16 @@ const fmtThousands = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const fmtDuration = m => { const h = Math.floor(m / 60), r = m % 60; return h ? `${h}h ${r}m` : `${r}m`; };
 const fmtKm = d => `${fmtDec(d, 2)} km`;
 const aiLabel = (ai, low) => `AI summary of ${ai.tip_count} ${ai.tip_count === 1 ? "tip" : "tips"}${low ? " · little data" : ""}`;
-const aiLabelHTML = (ai, low) => `<span class="ai-word">AI</span>${esc(aiLabel(ai, low).slice(2))}`;
+function aiLabelRow(ai, low) {
+  const based = `Based on ${ai.tip_count} ${ai.tip_count === 1 ? "tip" : "tips"}`;
+  return `<div class="ailabelrow"><span class="sr-only">AI summary, ${based.toLowerCase()}${low ? ", little data" : ""}</span>` +
+    `<span class="aipill" aria-hidden="true">${sparkle()}<span>AI Summary</span></span>` +
+    `<span class="aibased" aria-hidden="true">${based}${low ? " · little data" : ""}</span></div>`;
+}
 const ic = (id, extra = "") => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true" ${extra}><use href="#ic-${id}"/></svg>`;
-const sparkle = () => `<svg class="sparkle" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-sparkle"/></svg>`;
+const sparkle = () => `<svg class="sparkle" viewBox="0 0 15 15" aria-hidden="true"><use href="#ic-sparkle"/></svg>`;
 const starIcon = () => `<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-star"/></svg>`;
+const peopleIcon = () => `<svg class="people" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-people"/></svg>`;
 
 /* ================= Shared components ================= */
 function tabbar() {
@@ -620,7 +627,7 @@ function tabbar() {
 }
 function aiBox(ai, low, opts = {}) {
   return `<div class="aibox${low ? " low" : ""}">
-    <div class="ailabel">${sparkle()}<span>${aiLabelHTML(ai, low)}</span></div>
+    ${aiLabelRow(ai, low)}
     <div class="signal">${esc(ai.signal)}</div>
     ${opts.seeTips ? `<button class="seetips" data-action="see-tips">See the tips ${ic("chevright")}</button>` : ""}
   </div>`;
@@ -629,11 +636,12 @@ function statsLine(r) {
   return `<div class="stats">${ic("clock")}<span>${fmtDuration(r.duration_min)}</span><span class="sep">·</span>${ic("dist")}<span>${fmtKm(r.distance_km)}</span><span class="sep">·</span>${ic("up")}<span>${r.elevation_gain_m} m</span></div>`;
 }
 function ratingLine(r) {
-  return `<div class="rating">${starIcon()}<span>${fmtDec(r.rating, 1)}</span><span>·</span><span>${fmtThousands(r.rating_count)}</span></div>`;
+  const score = fmtDec(r.rating, 1), count = fmtThousands(r.rating_count);
+  return `<div class="rating"><span class="sr-only">Rating ${score}, ${count} ratings</span><span class="rpair" aria-hidden="true">${starIcon()}<span>${score}</span></span><span class="rpair" aria-hidden="true">${peopleIcon()}<span>${count}</span></span></div>`;
 }
 function cardAi(ai, low) {
   return `<span class="cardai${low ? " low" : ""}" style="display:block">
-    <span class="cardai-label">${sparkle()}<span>${aiLabelHTML(ai, low)}</span></span>
+    ${aiLabelRow(ai, low)}
     <span class="cardai-signal">${esc(ai.signal)}</span>
   </span>`;
 }
@@ -804,7 +812,7 @@ function renderDetail(kind) {
   scr.querySelector('[data-slot="photocount"]').style.display = r.photo_count != null ? "" : "none";
   let h = "";
   if (saved) h += `<div class="planned"><span class="avatar-sun"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-sun"/></svg></span><span><b>You planned a hike</b><small>Just now · Berlin, Germany</small></span></div>`;
-  h += `<div class="rowtop">${r.difficulty ? `<span class="chip-easy">${esc(r.difficulty)}</span>` : ""}${saved ? "" : `${starIcon().replace('class="star"', 'class="star" style="width:16px;height:16px;fill:var(--orange)"')}<span>${fmtDec(r.rating, 1)} · ${fmtThousands(r.rating_count)}</span>`}</div>`;
+  h += `<div class="rowtop">${r.difficulty ? `<span class="chip-easy">${esc(r.difficulty)}</span>` : ""}${saved ? "" : ratingLine(r)}</div>`;
   h += `<h1>${esc(r.title)}</h1>`;
   if (!saved && r.route_type) h += `<div class="typeline"><span>${ic("loop")}${esc(r.route_type)}</span><span>${ic("hiker")}Hiking</span></div>`;
   if (r.ai) h += aiBox(r.ai, low, { seeTips: true });
@@ -823,7 +831,7 @@ function renderWps() {
   const tips = ai.tips || [];
   let h = `<button class="backbtn icon-btn" data-action="back" aria-label="Back">${ic("back")}</button>
     <h1>What people say</h1><p class="sub">${esc(r.title)}</p>
-    <div class="wps-ai${low ? " low" : ""}"><div class="wps-label">${sparkle()}<span>${aiLabelHTML(ai, low)}</span></div>
+    <div class="wps-ai${low ? " low" : ""}">${aiLabelRow(ai, low)}
     <div class="wps-signal">${esc(ai.signal)}</div></div>`;
   h += tips.map((t, i) => `<button class="tip" data-action="noop" aria-label="Tip from ${esc(t.author)}, ${esc(t.age)}: ${esc(t.text)}">
       <span class="tb"><span class="who"><span class="av" style="background:${AVATAR_COLORS[i % AVATAR_COLORS.length]}">${esc(t.author.charAt(0))}</span><span class="name">${esc(t.author)}</span><span class="age">· ${esc(t.age)}</span></span>
