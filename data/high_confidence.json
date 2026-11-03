@@ -1,0 +1,86 @@
+{
+  "state": "high_confidence",
+  "framing": null,
+  "message": null,
+  "routes": [
+    {
+      "title": "Rummelsburger Bay loop",
+      "difficulty": "Easy",
+      "route_type": "Loop",
+      "rating": 4.8,
+      "rating_count": 2395,
+      "photo_count": 398,
+      "duration_min": 108,
+      "distance_km": 7.09,
+      "elevation_gain_m": 20,
+      "elevation_loss_m": 20,
+      "ai": {
+        "signal": "River the whole way around, quiet on weekday mornings, busy on Sunday afternoons, and the path always stays by the water",
+        "tip_count": 24,
+        "tips": [
+          {
+            "author": "Anna-Katharina-Friederike",
+            "age": "11 months ago",
+            "text": "Stayed right by the river for the whole loop. Busy with families on Sunday afternoons, but on a weekday evening, it was…"
+          },
+          {
+            "author": "Lena",
+            "age": "2 months ago",
+            "text": "Lovely walk right by the water the whole loop. On a Tuesday morning we hardly met anyone, just a few…"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Treptower Park loop",
+      "difficulty": null,
+      "route_type": null,
+      "rating": 4.7,
+      "rating_count": 1120,
+      "photo_count": null,
+      "duration_min": 125,
+      "distance_km": 8.30,
+      "elevation_gain_m": 15,
+      "elevation_loss_m": null,
+      "ai": {
+        "signal": "Along the river, busy near the park on weekends",
+        "tip_count": 128,
+        "tips": null
+      }
+    },
+    {
+      "title": "Spree riverside walk",
+      "difficulty": null,
+      "route_type": null,
+      "rating": 4.6,
+      "rating_count": 860,
+      "photo_count": null,
+      "duration_min": 80,
+      "distance_km": 5.40,
+      "elevation_gain_m": 10,
+      "elevation_loss_m": null,
+      "ai": {
+        "signal": "By the river",
+        "tip_count": 5,
+        "tips": null
+      }
+    },
+    {
+      "title": "Rummelsburger See and Plänterwald trails",
+      "difficulty": null,
+      "route_type": null,
+      "rating": 4.9,
+      "rating_count": 1847,
+      "photo_count": null,
+      "duration_min": 115,
+      "distance_km": 7.85,
+      "elevation_gain_m": 15,
+      "elevation_loss_m": null,
+      "ai": {
+        "signal": "River the whole way, quiet on weekdays",
+        "tip_count": 24,
+        "tips": null
+      }
+    }
+  ]
+}

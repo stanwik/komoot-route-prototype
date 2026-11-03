@@ -1,0 +1,62 @@
+{
+  "state": "low_confidence",
+  "framing": "Only a few tips match your description.",
+  "message": null,
+  "routes": [
+    {
+      "title": "Rummelsburger Bay loop",
+      "difficulty": "Easy",
+      "route_type": "Loop",
+      "rating": 4.8,
+      "rating_count": 2395,
+      "photo_count": 398,
+      "duration_min": 108,
+      "distance_km": 7.09,
+      "elevation_gain_m": 20,
+      "elevation_loss_m": 20,
+      "ai": {
+        "signal": "River for the first 2 km, then forest paths that turn muddy after rain, quiet on weekdays with almost nobody else around",
+        "tip_count": 4,
+        "tips": [
+          {
+            "author": "Lena",
+            "age": "2 months ago",
+            "text": "The first part follows the river and it’s calm. After the bridge it turns into forest paths…"
+          },
+          {
+            "author": "Marek",
+            "age": "1 year ago",
+            "text": "About 2 km along the water, then the forest. A bit muddy after rain, but quiet…"
+          },
+          {
+            "author": "Sofia",
+            "age": "8 months ago",
+            "text": "Short stretch by the river at the start, the rest is forest. We met almost no one on a Wednesday…"
+          },
+          {
+            "author": "Anna-Katharina-Friederike",
+            "age": "11 months ago",
+            "text": "We followed the water for about two kilometres, then the path went into the forest. Muddy in spots after rain, but nice…"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Treptower Park loop",
+      "difficulty": null,
+      "route_type": null,
+      "rating": 4.7,
+      "rating_count": 1120,
+      "photo_count": null,
+      "duration_min": 125,
+      "distance_km": 8.30,
+      "elevation_gain_m": 15,
+      "elevation_loss_m": null,
+      "ai": {
+        "signal": "River at the start, then streets with traffic",
+        "tip_count": 1,
+        "tips": null
+      }
+    }
+  ]
+}

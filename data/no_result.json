@@ -1,0 +1,49 @@
+{
+  "state": "no_result",
+  "framing": null,
+  "message": {
+    "title": "No route matched your description",
+    "text": "Here are normal routes nearby. Try describing it differently."
+  },
+  "routes": [
+    {
+      "title": "Rummelsburger Bay loop",
+      "difficulty": "Easy",
+      "route_type": "Loop",
+      "rating": 4.8,
+      "rating_count": 2395,
+      "photo_count": 398,
+      "duration_min": 108,
+      "distance_km": 7.09,
+      "elevation_gain_m": 20,
+      "elevation_loss_m": 20,
+      "ai": null
+    },
+    {
+      "title": "Treptower Park loop",
+      "difficulty": null,
+      "route_type": null,
+      "rating": 4.7,
+      "rating_count": 1120,
+      "photo_count": null,
+      "duration_min": 125,
+      "distance_km": 8.30,
+      "elevation_gain_m": 15,
+      "elevation_loss_m": null,
+      "ai": null
+    },
+    {
+      "title": "Spree riverside walk",
+      "difficulty": null,
+      "route_type": null,
+      "rating": 4.6,
+      "rating_count": 860,
+      "photo_count": null,
+      "duration_min": 80,
+      "distance_km": 5.40,
+      "elevation_gain_m": 10,
+      "elevation_loss_m": null,
+      "ai": null
+    }
+  ]
+}
