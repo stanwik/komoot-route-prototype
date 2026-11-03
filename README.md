@@ -4,7 +4,7 @@ Clickable iPhone 16 (393 × 852) prototype of **AI route summaries in route sear
 
 ## How to run
 
-`index.html` loads the payloads in `data/` with `fetch()`, so open it through a web server, not as a file:
+The pages load the payloads in `data/` with `fetch()`, so open them through a web server, not as files:
 
 ```bash
 python3 -m http.server 8000
@@ -12,9 +12,39 @@ python3 -m http.server 8000
 
 Then open http://localhost:8000. GitHub Pages works too. The map needs an internet connection (MapLibre GL JS from unpkg and OpenFreeMap tiles). Without it, the map area falls back to a plain land colour and everything else still works.
 
+## Two versions
+
+- **Maze version (multi-page):** every screen is its own page with its own URL, so Maze registers each step. Every page loads the Maze snippet. The state switcher is hidden.
+- **`in-person.html`:** the single-page version used for moderated sessions, with the state switcher always visible. No Maze snippet.
+
+### Pages
+
+| Page | Screen |
+|---|---|
+| `index.html` | Routes list |
+| `search.html` | Search screen |
+| `route.html` | Route detail (Rummelsburger Bay loop) |
+| `tips.html` | What people say |
+| `report.html` | What's wrong with this summary? |
+| `report-received.html` | Report received |
+| `saved.html` | Route saved sheet over route detail |
+| `saved-route.html` | Saved route |
+| `navigation.html` | Navigation started |
+
+All pages share `app.css` and `app.js` (styles, screen markup and behaviour).
+
+### URL parameters
+
+- `state`: `cold_start` (default), `high`, `low`, `no_result`, `error` or `waiting`. It sets the routes list and what a search returns. A search from Cold start returns High confidence.
+- `q`: the search text. Without it, every state except `cold_start` shows "Quiet hike along the water".
+- `switcher=1`: shows the Test state switcher, for example `index.html?switcher=1` or `index.html?state=low&switcher=1`.
+- Set by the pages themselves and carried along: `view=cancelled` (after Cancel), `banner=0` (after Dismiss), `from=saved` (tips and report opened from the saved route).
+
+`state`, `q` and `switcher` carry over to every page the tester moves to.
+
 ## Using it in a test
 
-- The **Test state** panel next to the phone shows the routes list in a state (Cold start, High confidence, Low confidence, No result, Error, Waiting) and sets what the next search returns. The page opens in Cold start. Picking Cold start makes the next search return High confidence. Picking Waiting keeps a search in waiting until Cancel.
+- The **Test state** panel next to the phone (always in `in-person.html`, with `switcher=1` in the Maze version) shows the routes list in a state and sets what the next search returns. Picking Cold start makes the next search return High confidence. Picking Waiting keeps a search in waiting until Cancel.
 - A search waits 0.8 s, shows the waiting state, then the picked state after 4 s.
 - Only the Rummelsburger Bay loop card opens route detail.
 
@@ -41,7 +71,8 @@ Each route has 3 photos, shown in the same order on its card, route detail and s
 
 ## Files
 
-- `index.html`: the whole prototype (HTML, CSS, JS).
+- `index.html` and the other 8 pages: the Maze version (one page per screen), with `app.css` and `app.js`.
+- `in-person.html`: the single-page version (HTML, CSS, JS in one file).
 - `data/*.json`: the four route payloads. All route content on screen comes from these.
 - `images/`: photos (see Photos above).
 - `design/`: wireframes, Komoot style references and the Design Context Brief.
