@@ -72,7 +72,7 @@ Bottom nav: Home, Routes, Record, Profile, Offline.
 
 ### High confidence
 **Routes list:** count line "4 hikes", route cards with the AI box.
-**Route detail:** map with back, share and more buttons, photo count (▢ 398), image dots and mini map. "Easy" label, rating, title, "Loop · Hiking". AI box with sparkle icon, "AI summary of 24 tips", signal line and See the tips button. Stats: duration, distance, elevation gain, elevation loss. Save, Navigate and Edit. Bottom nav.
+**Route detail:** photo with back, share and more buttons, photo count (▢ 398), image dots and mini map. "Easy" label, rating, title, "Loop · Hiking". AI box with sparkle icon, "AI summary of 24 tips", signal line and See the tips button. Stats: duration, distance, elevation gain, elevation loss. Save, Navigate and Edit. Bottom nav.
 **What people say:** back, title "What people say", route name, sparkle icon with "AI summary of 24 tips", signal line. 2 tips, each with avatar, name, age, tip text and ›. More tips. "Was this summary helpful?" with thumbs up and down. Bottom nav.
 **Report (after thumbs down):** back, title "What's wrong with this summary?", route name, 4 reasons with a radio button and a description each, Submit. Bottom nav.
 **Report received:** illustration, title, text, Back to route. No bottom nav.
@@ -84,7 +84,7 @@ Bottom nav: Home, Routes, Record, Profile, Offline.
 Same screens as high confidence, with these differences.
 **Routes list:** a box above the cards with "Only a few tips match your description." and a Change search link. This is not the status banner. Count line "2 hikes", 2 route cards.
 **AI box:** "little data" in the label and a dashed border, on the card and on route detail.
-**What people say:** all 3 tips shown at once, no More tips.
+**What people say:** all tips from the payload shown at once, no More tips.
 
 ### No result
 Search bar with the user's text and clear icon.
