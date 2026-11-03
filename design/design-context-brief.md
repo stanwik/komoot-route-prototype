@@ -63,6 +63,8 @@ When the user describes the route they want in the search bar, the AI writes one
 ### Every routes list screen
 Map in the background.
 Search bar: the user's text with a clear icon (⊗), or the placeholder "Search or describe the route" when empty.
+Plan button to the right of the search bar.
+Three round map buttons on the right of the map, just above the bottom sheet: offline, my location, map layers.
 Filter chips: Hike ▾, within 30 km, Filters.
 Bottom sheet with a count line and route cards.
 Route card: photo, rating (★ 4,8 · 2.395), title, stats (1h 48m · 7,09 km · ↗ 20 m), and the AI box when there is one: sparkle icon, "AI summary of 24 tips", signal line.
@@ -155,7 +157,7 @@ Count line "3 hikes nearby, no AI summaries".
 - Thumbs up → the button shows as selected. Nothing opens.
 
 **Out of scope**
-- Shown, but does nothing: filter chips, bottom nav, share and more, Edit (✎), mini map and photos, the › on each tip, More tips, the quick options on the search screen, the other 3 example descriptions, route cards other than Rummelsburger Bay loop, the name field, Save offline and Get started on the Route saved sheet, Controls on the navigation screen.
+- Shown, but does nothing: Plan button, the three map buttons, route markers on the map, filter chips, bottom nav, share and more, Edit (✎), mini map and photos, the › on each tip, More tips, the quick options on the search screen, the other 3 example descriptions, route cards other than Rummelsburger Bay loop, the name field, Save offline and Get started on the Route saved sheet, Controls on the navigation screen.
 - Not built: real turn-by-turn navigation; home address setup; creating or ranking routes; any live model call.
 
 ## 8. Must never appear
