@@ -327,12 +327,12 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
   <p>Shows the routes list in this state and sets what the next search returns.</p>
   <fieldset id="stateSwitch">
     <legend>Routes list state</legend>
-    <label><input type="radio" name="state" value="cold"> Cold start</label>
-    <label><input type="radio" name="state" value="high" checked> High confidence</label>
-    <label><input type="radio" name="state" value="low"> Low confidence</label>
-    <label><input type="radio" name="state" value="no_result"> No result</label>
-    <label><input type="radio" name="state" value="error"> Error</label>
-    <label><input type="radio" name="state" value="waiting"> Waiting</label>
+    <label><input type="radio" name="state" value="cold" autocomplete="off" checked> Cold start</label>
+    <label><input type="radio" name="state" value="high" autocomplete="off"> High confidence</label>
+    <label><input type="radio" name="state" value="low" autocomplete="off"> Low confidence</label>
+    <label><input type="radio" name="state" value="no_result" autocomplete="off"> No result</label>
+    <label><input type="radio" name="state" value="error" autocomplete="off"> Error</label>
+    <label><input type="radio" name="state" value="waiting" autocomplete="off"> Waiting</label>
   </fieldset>
   <div class="load-error" id="loadError" hidden>The route data could not be loaded. Open this page through a web server (for example <code>python3 -m http.server</code>), not as a file.</div>
 </aside>
@@ -588,8 +588,8 @@ const REASONS = [
 /* ================= App state ================= */
 const S = {
   data: null,            // payloads keyed by state
-  view: "high",          // what the routes list shows now: cold | high | low | no_result | error | waiting | cancelled
-  nextState: "high",     // switcher choice: what the next search returns
+  view: "cold",          // what the routes list shows now: cold | high | low | no_result | error | waiting | cancelled
+  nextState: "cold",     // switcher choice: what the next search returns
   query: "",
   bannerOpen: true,
   route: null,           // route object opened on detail
@@ -1237,7 +1237,7 @@ function dragBy(dy) {
 /* ================= Boot ================= */
 Promise.all(["high_confidence", "low_confidence", "no_result", "error"].map(n =>
   fetch(`data/${n}.json`).then(r => { if (!r.ok) throw new Error(n); return r.json(); }).then(j => [n, j])))
-  .then(list => { S.data = Object.fromEntries(list); applyState("high"); })
+  .then(list => { S.data = Object.fromEntries(list); $('input[name=state][value=cold]').checked = true; applyState("cold"); })
   .catch(() => { $("#loadError").hidden = false; });
 </script>
 </body>
