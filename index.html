@@ -133,16 +133,17 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .card .stats .sep{color:#595959}
 .cardai{margin-top:8px;border-top:1px solid #F3F2EF;padding-top:8px}
 .cardai.low{border-top-style:dashed}
-.cardai-label{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:400;color:#666666}
-.cardai-label .sparkle{width:9px;height:9px}
-.cardai-signal{font-size:12px;font-weight:500;color:#262626;line-height:1.4;padding-left:13px;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cardai-label{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:400;color:#666666}
+.cardai-label .sparkle{width:14px;height:14px}
+.cardai-signal{font-size:13px;font-weight:500;color:#262626;line-height:1.4;padding-left:18px;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .stats{display:flex;align-items:center;gap:5px;font-size:15px;color:var(--text);flex-wrap:nowrap;white-space:nowrap}
 .stats svg.i{width:17px;height:17px}
 .stats .sep{color:var(--text2)}
 .aibox{margin-top:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px 11px}
 .aibox.low{border:1.5px dashed #8E7F69;background:#FBFAF6}
 .ailabel{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);margin-bottom:3px}
-.sparkle{width:14px;height:14px;fill:#E5742A;flex:none}
+.sparkle{width:16px;height:16px;fill:#E5742A;flex:none}
+.ai-word{color:#E5742A}
 .signal{font-size:16px;line-height:1.35;color:var(--text)}
 .card .signal{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .card.inert{cursor:default}
@@ -156,7 +157,7 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 @media (prefers-reduced-motion:reduce){.shimmer::after{animation:none}}
 .skel .airow{display:flex;align-items:center;gap:6px;margin-top:10px}
 .skel .airow .bar{margin:0;flex:1}
-.skel .sparkle{width:12px;height:12px;transform-origin:50% 50%;animation:spin 1.5s linear infinite}
+.skel .sparkle{width:14px;height:14px;transform-origin:50% 50%;animation:spin 1.5s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.skel .sparkle{animation:none}}
 
@@ -164,9 +165,11 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .hero{position:relative;height:254px;background:#9FB3C0}
 .hero::before{content:"";position:absolute;left:0;right:0;top:0;height:120px;background:linear-gradient(rgba(0,0,0,.28),rgba(0,0,0,0));z-index:1;pointer-events:none}
 .hero > button,.hero > .tr,.hero > .photocount,.hero > .dots,.hero > .minimap{z-index:2}
-.carousel{position:absolute;inset:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
-.carousel::-webkit-scrollbar{display:none}
-.carousel img{flex:none;width:100%;height:100%;object-fit:cover;scroll-snap-align:start;display:block;user-select:none}
+.carousel{position:absolute;inset:0}
+.slider{position:absolute;inset:0;overflow:hidden;touch-action:pan-y;cursor:grab;display:block}
+.slider.grabbing{cursor:grabbing}
+.slider .track{display:flex;height:100%;will-change:transform}
+.slider img{flex:none;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none}
 .hero .tl{position:absolute;top:60px;left:16px}
 .hero .tr{position:absolute;top:60px;right:16px;display:flex;border-radius:22px;height:44px}
 .roundbtn{width:44px;height:44px;border-radius:22px}
@@ -247,8 +250,12 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
 /* ---------- Route saved sheet ---------- */
 .overlay{position:absolute;inset:0;z-index:50;display:none}
 .overlay.open{display:block}
-.overlay .dim{position:absolute;inset:0;background:rgba(27,26,24,.38)}
-.savesheet{position:absolute;left:0;right:0;top:58px;bottom:0;background:var(--bg);border-radius:28px 28px 0 0;padding:8px 24px 30px;display:flex;flex-direction:column}
+.overlay .dim{position:absolute;inset:0;background:rgba(27,26,24,.38);opacity:0;transition:opacity .35s ease}
+.overlay.in .dim{opacity:1}
+.savesheet{position:absolute;left:0;right:0;top:58px;bottom:0;background:var(--bg);border-radius:28px 28px 0 0;padding:8px 24px 30px;display:flex;flex-direction:column;
+  transform:translateY(100%);transition:transform .35s cubic-bezier(0.32,0.72,0,1)}
+.overlay.in .savesheet{transform:none}
+@media (prefers-reduced-motion:reduce){.savesheet{transform:none;opacity:0;transition:opacity .2s ease}.overlay.in .savesheet{opacity:1}.overlay .dim{transition-duration:.2s}}
 .savesheet .head{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
 .savesheet h2{font-size:28px;margin:0;font-weight:700}
 .savesheet .x{width:44px;height:44px;border-radius:22px;margin-right:-10px}
@@ -541,7 +548,7 @@ svg.i{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-widt
     <symbol id="ic-thumbup" viewBox="0 0 24 24"><path d="M7 11v9.5H3.5V11z"/><path d="M7 11l4-7.5c1.6 0 2.7 1.2 2.4 2.8L12.8 10h5.6a2 2 0 0 1 2 2.4l-1.3 6.4a2 2 0 0 1-2 1.7H7"/></symbol>
     <symbol id="ic-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
     <symbol id="ic-arrowup" viewBox="0 0 24 24"><path d="M12 21V4M5 11l7-7 7 7"/></symbol>
-    <symbol id="ic-sparkle" viewBox="0 0 24 24"><path d="M9.5 5C10.2 10.6 12.4 12.8 18 13.5 12.4 14.2 10.2 16.4 9.5 22 8.8 16.4 6.6 14.2 1 13.5 6.6 12.8 8.8 10.6 9.5 5Z"/><path d="M18.5 1C18.8 3.6 19.9 4.7 22.5 5 19.9 5.3 18.8 6.4 18.5 9 18.2 6.4 17.1 5.3 14.5 5 17.1 4.7 18.2 3.6 18.5 1Z"/></symbol>
+    <symbol id="ic-sparkle" viewBox="0 0 24 24"><path d="M12 1.5c.7 5.6 3.3 8.7 10.5 10.5-7.2 1.8-9.8 4.9-10.5 10.5-.7-5.6-3.3-8.7-10.5-10.5C8.7 10.2 11.3 7.1 12 1.5z"/></symbol>
     <symbol id="ic-map" viewBox="0 0 24 24"><path d="M3.5 6.5 9 4.5l6 2 5.5-2v13l-5.5 2-6-2-5.5 2z"/><path d="M9 4.5v13M15 6.5v13"/></symbol>
     <symbol id="ic-sun" viewBox="0 0 24 24"><path d="M4 16a8 8 0 0 1 16 0z" fill="#FC5D00"/><path d="M12 4v3M5.5 7l2 2M18.5 7l-2 2M2.5 12.5h2.5M19 12.5h2.5" stroke="#FC5D00" stroke-width="1.8" stroke-linecap="round"/><path d="M2 18.5h20" stroke="#FC5D00" stroke-width="1.8" stroke-linecap="round"/></symbol>
   </defs>
@@ -561,13 +568,12 @@ const MARKER_POS = {
   "Rummelsburger See and Plänterwald trails": [13.4870, 52.4810]
 };
 const MARKER_COLORS = ["#2D5BD3", "#8C7FDB", "#A3372A", "#4A3A2E"];
-// One photo per route, used everywhere that route appears (card, detail, saved route).
-// The first photo of each gallery is the route's photo; the rest fill the detail carousel.
+// Three photos per route, the same everywhere that route appears (card, detail, saved route).
 const ROUTE_PHOTOS = {
   "Rummelsburger Bay loop": ["lake-reeds.jpg", "lake-reeds-sunset.jpg", "pond-reeds.jpg"],
-  "Treptower Park loop": ["lake-trees-reflection.jpg"],
-  "Spree riverside walk": ["river-trees-reflection.jpg"],
-  "Rummelsburger See and Plänterwald trails": ["forest-path-green.jpg"]
+  "Treptower Park loop": ["lake-trees-reflection.jpg", "meadow-path.jpg", "forest-path-autumn.jpg"],
+  "Spree riverside walk": ["river-trees-reflection.jpg", "lake-calm-forest.jpg", "lake-forest-view.jpg"],
+  "Rummelsburger See and Plänterwald trails": ["forest-path-green.jpg", "forest-path-pine.jpg", "forest-light.jpg"]
 };
 const photo = (file, cls = "realphoto") => `<img class="${cls}" src="images/${file}" alt="" draggable="false">`;
 const AVATAR_COLORS = ["#5C6F2B", "#8A5A3C", "#3F6E8C", "#6B5B95", "#9A6B1F"];
@@ -601,6 +607,7 @@ const fmtThousands = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 const fmtDuration = m => { const h = Math.floor(m / 60), r = m % 60; return h ? `${h}h ${r}m` : `${r}m`; };
 const fmtKm = d => `${fmtDec(d, 2)} km`;
 const aiLabel = (ai, low) => `AI summary of ${ai.tip_count} ${ai.tip_count === 1 ? "tip" : "tips"}${low ? " · little data" : ""}`;
+const aiLabelHTML = (ai, low) => `<span class="ai-word">AI</span>${esc(aiLabel(ai, low).slice(2))}`;
 const ic = (id, extra = "") => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true" ${extra}><use href="#ic-${id}"/></svg>`;
 const sparkle = () => `<svg class="sparkle" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-sparkle"/></svg>`;
 const starIcon = () => `<svg class="star" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-star"/></svg>`;
@@ -613,7 +620,7 @@ function tabbar() {
 }
 function aiBox(ai, low, opts = {}) {
   return `<div class="aibox${low ? " low" : ""}">
-    <div class="ailabel">${sparkle()}<span>${esc(aiLabel(ai, low))}</span></div>
+    <div class="ailabel">${sparkle()}<span>${aiLabelHTML(ai, low)}</span></div>
     <div class="signal">${esc(ai.signal)}</div>
     ${opts.seeTips ? `<button class="seetips" data-action="see-tips">See the tips ${ic("chevright")}</button>` : ""}
   </div>`;
@@ -626,7 +633,7 @@ function ratingLine(r) {
 }
 function cardAi(ai, low) {
   return `<span class="cardai${low ? " low" : ""}" style="display:block">
-    <span class="cardai-label">${sparkle()}<span>${esc(aiLabel(ai, low))}</span></span>
+    <span class="cardai-label">${sparkle()}<span>${aiLabelHTML(ai, low)}</span></span>
     <span class="cardai-signal">${esc(ai.signal)}</span>
   </span>`;
 }
@@ -636,9 +643,9 @@ function routeCard(r, low, showAi) {
   const attrs = active ? `data-action="open-route" aria-label="${esc(r.title)}, open route"` : "";
   return `<${tag} class="card${active ? "" : " inert"}" ${attrs}>
     <span class="photo" style="display:block">
-      ${ROUTE_PHOTOS[r.title] ? photo(ROUTE_PHOTOS[r.title][0]) : ""}
+      ${sliderHTML(ROUTE_PHOTOS[r.title] || [], true)}
       ${r.difficulty ? `<span class="chip-easy">${esc(r.difficulty)}</span>` : ""}
-      <span class="dots"><i class="on"></i><i></i><i></i></span>
+      ${dotsHTML((ROUTE_PHOTOS[r.title] || []).length)}
     </span>
     <span class="meta" style="display:block">
       ${ratingLine(r)}
@@ -653,6 +660,89 @@ function skeletonCard() {
     <div class="meta"><div class="bar shimmer" style="width:30%"></div><div class="bar shimmer" style="width:60%"></div><div class="bar shimmer" style="width:50%"></div>
     <div class="airow">${sparkle()}<div class="bar shimmer"></div></div></div></div>`;
 }
+
+/* ================= Photo slider (cards: auto + by hand; detail: by hand) ================= */
+const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+function sliderHTML(files, auto) {
+  if (!files.length) return "";
+  const list = auto ? [...files, files[0]] : files;               // cards: clone of the first photo at the end for a seamless loop
+  return `<span class="slider" data-n="${files.length}"><span class="track">${list.map(f => photo(f, "")).join("")}</span></span>`;
+}
+function dotsHTML(n) { return n > 1 ? `<span class="dots">${Array.from({ length: n }, (_, i) => `<i${i ? "" : ' class="on"'}></i>`).join("")}</span>` : ""; }
+function slideTo(s, i, ms) {
+  const w = s.el.clientWidth || 1;
+  s.i = i;
+  s.track.style.transition = ms ? `transform ${ms}ms cubic-bezier(.25,.8,.25,1)` : "none";
+  s.track.style.transform = `translateX(${-i * w}px)`;
+  if (s.dots) s.dots.querySelectorAll("i").forEach((d, k) => d.classList.toggle("on", k === i % s.n));
+  clearTimeout(s.loopT);
+  if (i >= s.n) s.loopT = setTimeout(() => slideTo(s, 0, 0), ms + 20);   // landed on the clone: jump back to the real first photo
+}
+function initSlider(el, dots, auto) {
+  if (!el) return null;
+  const s = { el, dots, track: el.querySelector(".track"), n: +el.dataset.n, i: 0, manual: false, p: null, swallow: false, visible: false };
+  el._s = s;
+  el.addEventListener("pointerdown", e => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    if (s.i >= s.n) slideTo(s, 0, 0);
+    s.p = { id: e.pointerId, x: e.clientX, y: e.clientY, axis: null, dx: 0, lastX: e.clientX, lastT: e.timeStamp, v: 0 };
+  });
+  el.addEventListener("pointermove", e => {
+    const p = s.p; if (!p || e.pointerId !== p.id) return;
+    const tdx = e.clientX - p.x, tdy = e.clientY - p.y;
+    if (!p.axis) {
+      if (Math.max(Math.abs(tdx), Math.abs(tdy)) < 6) return;
+      p.axis = Math.abs(tdx) > Math.abs(tdy) ? "x" : "y";
+      if (p.axis === "y") { s.p = null; return; }                        // vertical: leave it to the sheet / list
+      try { el.setPointerCapture(p.id); } catch (_) {}
+      s.manual = true;                                                    // swiped by hand: no more auto-play on this card
+      el.classList.add("grabbing");
+    }
+    let dx = tdx;
+    if ((s.i === 0 && dx > 0) || (s.i === s.n - 1 && dx < 0)) dx /= 3;    // resist at the ends
+    p.dx = dx;
+    p.v = (e.clientX - p.lastX) / Math.max(1, e.timeStamp - p.lastT); p.lastX = e.clientX; p.lastT = e.timeStamp;
+    const w = el.clientWidth;
+    s.track.style.transition = "none";
+    s.track.style.transform = `translateX(${-s.i * w + dx}px)`;
+  });
+  const end = e => {
+    const p = s.p; if (!p || e.pointerId !== p.id) return;
+    s.p = null; el.classList.remove("grabbing");
+    if (p.axis !== "x") return;
+    const w = el.clientWidth; let i = s.i;
+    if ((p.dx < -w * 0.2 || p.v < -0.4) && i < s.n - 1) i++;
+    else if ((p.dx > w * 0.2 || p.v > 0.4) && i > 0) i--;
+    slideTo(s, i, 350);
+    if (e.type === "pointerup") { s.swallow = true; setTimeout(() => { s.swallow = false; }, 0); }
+  };
+  el.addEventListener("pointerup", end);
+  el.addEventListener("pointercancel", end);
+  el.addEventListener("click", e => { if (s.swallow) { e.stopPropagation(); e.preventDefault(); s.swallow = false; } }, true);
+  return s;
+}
+// Card auto-play: every 5 s per card, cards offset by 1 s; only while on screen; never after a manual swipe.
+const autoPlay = { list: [], tick: 0, base: 0, io: null };
+function setupAutoPlay(root) {
+  if (autoPlay.io) autoPlay.io.disconnect();
+  autoPlay.list = []; autoPlay.base = autoPlay.tick;
+  autoPlay.io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(en => { if (en.target._s) en.target._s.visible = en.isIntersecting; }), { threshold: 0.5 }) : null;
+  root.querySelectorAll(".card .slider").forEach(el => {
+    const s = initSlider(el, el.parentElement.querySelector(".dots"), true);
+    if (!s) return;
+    autoPlay.list.push(s);
+    if (autoPlay.io) autoPlay.io.observe(el); else s.visible = true;
+  });
+}
+setInterval(() => {
+  autoPlay.tick++;
+  if (reduceMotion()) return;
+  const t = autoPlay.tick - autoPlay.base;
+  autoPlay.list.forEach((s, k) => {
+    if (t < 5 || (t - k) % 5 !== 0 || !s.visible || s.manual || s.p) return;
+    slideTo(s, s.i + 1, 500);
+  });
+}, 1000);
 
 /* ================= Routes list ================= */
 function payloadFor(view) {
@@ -692,6 +782,7 @@ function renderRoutesSheet() {
     h += routes.map(r => routeCard(r, low, showAi)).join("");
   }
   el.innerHTML = h;
+  setupAutoPlay(el);
 }
 function renderRoutes(resetScroll = true) {
   renderSearchbar();
@@ -706,10 +797,9 @@ function renderDetail(kind) {
   const scr = $(saved ? "#saved" : "#detail");
   const gallery = ROUTE_PHOTOS[r.title] || [];
   const car = scr.querySelector('[data-slot="carousel"]'), dots = scr.querySelector('[data-slot="dots"]');
-  car.innerHTML = gallery.map(f => photo(f, "")).join("");
-  car.scrollLeft = 0;
-  dots.innerHTML = gallery.length > 1 ? gallery.map((_, i) => `<i${i ? "" : ' class="on"'}></i>`).join("") : "";
-  car.onscroll = () => { const k = Math.round(car.scrollLeft / car.clientWidth); dots.querySelectorAll("i").forEach((d, i) => d.classList.toggle("on", i === k)); };
+  car.innerHTML = sliderHTML(gallery, false);
+  dots.innerHTML = dotsHTML(gallery.length).replace(/^<span class="dots">|<\/span>$/g, "");
+  initSlider(car.querySelector(".slider"), dots, false);
   scr.querySelector('[data-slot="photocount"]').innerHTML = r.photo_count != null ? `${ic("image")}<span>${fmtThousands(r.photo_count)}</span>` : "";
   scr.querySelector('[data-slot="photocount"]').style.display = r.photo_count != null ? "" : "none";
   let h = "";
@@ -733,7 +823,7 @@ function renderWps() {
   const tips = ai.tips || [];
   let h = `<button class="backbtn icon-btn" data-action="back" aria-label="Back">${ic("back")}</button>
     <h1>What people say</h1><p class="sub">${esc(r.title)}</p>
-    <div class="wps-ai${low ? " low" : ""}"><div class="wps-label">${sparkle()}<span>${esc(aiLabel(ai, low))}</span></div>
+    <div class="wps-ai${low ? " low" : ""}"><div class="wps-label">${sparkle()}<span>${aiLabelHTML(ai, low)}</span></div>
     <div class="wps-signal">${esc(ai.signal)}</div></div>`;
   h += tips.map((t, i) => `<button class="tip" data-action="noop" aria-label="Tip from ${esc(t.author)}, ${esc(t.age)}: ${esc(t.text)}">
       <span class="tb"><span class="who"><span class="av" style="background:${AVATAR_COLORS[i % AVATAR_COLORS.length]}">${esc(t.author.charAt(0))}</span><span class="name">${esc(t.author)}</span><span class="age">· ${esc(t.age)}</span></span>
@@ -865,8 +955,40 @@ function ensureNavMap() {
 /* ================= Router ================= */
 const NAV_SCREENS = ["routes", "detail", "saved", "wps", "report"];
 const LIGHT_STATUS = ["detail", "saved", "nav"];
-function show(id, focusTarget) {
-  document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === id));
+let screenTrans = null;
+function animateScreens(prev, next, type) {
+  const reduce = reduceMotion();
+  const opts = reduce ? { duration: 200, easing: "ease" } : { duration: 350, easing: "cubic-bezier(0.32, 0.72, 0, 1)" };
+  const top = type === "push" ? next : prev, under = top === next ? prev : next;
+  top.style.zIndex = "2"; under.style.zIndex = "1";
+  const shade = "-10px 0 24px rgba(27,26,24,.18)";
+  let anims;
+  if (reduce) {
+    anims = [type === "push" ? next.animate([{ opacity: 0 }, { opacity: 1 }], opts) : prev.animate([{ opacity: 1 }, { opacity: 0 }], opts)];
+  } else if (type === "push") {
+    anims = [next.animate([{ transform: "translateX(100%)", boxShadow: shade }, { transform: "translateX(0)", boxShadow: shade }], opts),
+             prev.animate([{ transform: "translateX(0)", filter: "brightness(1)" }, { transform: "translateX(-30%)", filter: "brightness(.88)" }], opts)];
+  } else {
+    anims = [prev.animate([{ transform: "translateX(0)", boxShadow: shade }, { transform: "translateX(100%)", boxShadow: shade }], opts),
+             next.animate([{ transform: "translateX(-30%)", filter: "brightness(.88)" }, { transform: "translateX(0)", filter: "brightness(1)" }], opts)];
+  }
+  const done = () => {
+    if (screenTrans !== t) return;
+    screenTrans = null;
+    anims.forEach(a => a.cancel());
+    prev.classList.remove("active");
+    prev.style.zIndex = ""; next.style.zIndex = "";
+  };
+  const t = { finish: done };
+  screenTrans = t;
+  anims[0].onfinish = done;
+}
+function show(id, focusTarget, anim) {
+  if (screenTrans) screenTrans.finish();
+  const prev = document.querySelector(".screen.active");
+  const next = document.getElementById(id);
+  if (anim && prev && prev !== next) next.classList.add("active");
+  else document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s === next));
   $("#statusbar").classList.toggle("light", LIGHT_STATUS.includes(id));
   const scr = document.getElementById(id);
   const slot = scr.querySelector(".tabslot");
@@ -878,14 +1000,15 @@ function show(id, focusTarget) {
   if (id === "report") renderReport();
   if (id === "nav") ensureNavMap();
   if (id === "search") { const inp = $("#searchInput"); inp.value = S.query; syncGo(); }
+  if (anim && prev && prev !== next) animateScreens(prev, next, anim);
   requestAnimationFrame(() => {
     Object.values(maps).forEach(m => m && m.resize());
     (focusTarget ? $(focusTarget) : scr).focus({ preventScroll: true });
   });
 }
 const top_ = () => S.stack[S.stack.length - 1];
-function go(id, f) { S.stack.push(id); show(id, f); }
-function back() { if (S.stack.length > 1) S.stack.pop(); show(top_()); }
+function go(id, f) { S.stack.push(id); show(id, f, "push"); }
+function back() { if (S.stack.length > 1) S.stack.pop(); show(top_(), null, "pop"); }
 function replaceTop(id) { S.stack[S.stack.length - 1] = id; show(id); }
 
 /* ================= Search + waiting ================= */
@@ -894,8 +1017,10 @@ function resolveState(next) { return next === "cold" ? "high" : next; }
 function runSearch(q) {
   clearTimers();
   S.query = q;
+  if (screenTrans) screenTrans.finish();
+  const from = document.querySelector(".screen.active");
   S.stack = ["routes"];
-  show("routes");                                   // same results, new text — nothing else changes for 0.8 s
+  show("routes", null, from && from.id === "search" ? "pop" : null);   // same results, new text — nothing else changes for 0.8 s
   S.timers.push(setTimeout(() => {
     S.view = "waiting"; S.bannerOpen = true; renderRoutes();
     const target = resolveState(S.nextState);
@@ -916,16 +1041,25 @@ function applyState(v) {
 let sheetReturn = null;
 function openSheet() {
   $("#nameField").value = S.route.title;
-  $("#saveOverlay").classList.add("open");
+  const ov = $("#saveOverlay");
+  clearTimeout(ov._t);
+  ov.classList.add("open");
+  void ov.offsetWidth;                               // start from the closed position, then slide up
+  ov.classList.add("in");
   $("#detail").setAttribute("aria-hidden", "true");
   $("#statusbar").classList.remove("light");
   requestAnimationFrame(() => $("#savedTitle").focus());
 }
 function closeSheet(toSaved = true) {
-  if (!$("#saveOverlay").classList.contains("open")) return;
-  $("#saveOverlay").classList.remove("open");
+  const ov = $("#saveOverlay");
+  if (!ov.classList.contains("in")) { if (!toSaved) { clearTimeout(ov._t); ov.classList.remove("open"); } return; }
+  ov.classList.remove("in");
   $("#detail").removeAttribute("aria-hidden");
-  if (toSaved) replaceTop("saved");
+  if (toSaved) {                                     // saved route appears underneath while the sheet slides down
+    replaceTop("saved");
+    clearTimeout(ov._t);
+    ov._t = setTimeout(() => ov.classList.remove("open"), reduceMotion() ? 220 : 370);
+  } else { clearTimeout(ov._t); ov.classList.remove("open"); }
 }
 
 /* ================= Actions ================= */
@@ -952,11 +1086,11 @@ const actions = {
   "thumb-up"(el) { S.thumbsUp = !S.thumbsUp; el.setAttribute("aria-pressed", String(S.thumbsUp)); },
   "thumb-down"() { go("report"); },
   "submit-report"() { if (S.reason == null) return; go("received"); },
-  "back-to-route"() { while (S.stack.length > 1 && !["detail", "saved"].includes(top_())) S.stack.pop(); show(top_()); },
+  "back-to-route"() { while (S.stack.length > 1 && !["detail", "saved"].includes(top_())) S.stack.pop(); show(top_(), null, "pop"); },
   save() { openSheet(); },
   "close-sheet"() { closeSheet(true); },
   navigate() { go("nav"); },
-  "end-nav"() { S.stack.pop(); if (top_() === "detail") replaceTop("saved"); else show(top_()); }
+  "end-nav"() { S.stack.pop(); if (top_() === "detail") S.stack[S.stack.length - 1] = "saved"; show(top_(), null, "pop"); }
 };
 document.addEventListener("click", e => {
   const el = e.target.closest("[data-action]");
@@ -977,7 +1111,7 @@ $("#searchForm").addEventListener("submit", e => {
   if (q) runSearch(q);
 });
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape" && $("#saveOverlay").classList.contains("open")) closeSheet(true);
+  if (e.key === "Escape" && $("#saveOverlay").classList.contains("in")) closeSheet(true);
 });
 
 /* ================= Bottom sheet: pull up over the map, then scroll ================= */
@@ -1037,13 +1171,18 @@ function dragBy(dy) {
   sh.addEventListener("touchstart", e => {
     if (e.touches.length !== 1) { t = null; return; }
     const y = e.touches[0].clientY;
-    t = { lastY: y, lastT: e.timeStamp, startOff: sheetOff, mode: null, lastDy: 0, v: 0 };
+    t = { x0: e.touches[0].clientX, y0: y, lastY: y, lastT: e.timeStamp, startOff: sheetOff, mode: null, lastDy: 0, v: 0 };
   }, { passive: true });
   sh.addEventListener("touchmove", e => {
     if (!t) return;
     const y = e.touches[0].clientY, dy = y - t.lastY;
     if (!dy) return;
-    if (!t.mode) t.mode = ((dy < 0 && sheetOff > 0) || (dy > 0 && sc.scrollTop <= 80 && sheetOff < SHEET_MAX)) ? "sheet" : "native";
+    if (!t.mode) {
+      const tdx = e.touches[0].clientX - t.x0, tdy = y - t.y0;
+      if (Math.max(Math.abs(tdx), Math.abs(tdy)) < 6) return;
+      if (Math.abs(tdx) > Math.abs(tdy)) { t.mode = "none"; return; }     // horizontal: a photo swipe, not the sheet
+      t.mode = ((tdy < 0 && sheetOff > 0) || (tdy > 0 && sc.scrollTop <= 80 && sheetOff < SHEET_MAX)) ? "sheet" : "native";
+    }
     if (t.mode !== "sheet") return;
     e.preventDefault();
     sh.classList.remove("snap");
@@ -1059,10 +1198,16 @@ function dragBy(dy) {
   let m = null, swallowClick = false;
   sh.addEventListener("pointerdown", e => {
     if (e.pointerType !== "mouse" || e.button !== 0) return;
-    m = { y: e.clientY, lastY: e.clientY, lastT: e.timeStamp, startOff: sheetOff, total: 0, lastDy: 0, v: 0 };
+    m = { x: e.clientX, y: e.clientY, lastY: e.clientY, lastT: e.timeStamp, startOff: sheetOff, total: 0, lastDy: 0, v: 0, axis: null };
   });
   window.addEventListener("pointermove", e => {
     if (!m || e.pointerType !== "mouse") return;
+    if (!m.axis) {
+      const tdx = e.clientX - m.x, tdy = e.clientY - m.y;
+      if (Math.max(Math.abs(tdx), Math.abs(tdy)) < 6) return;
+      if (Math.abs(tdx) > Math.abs(tdy)) { m = null; return; }            // horizontal: a photo swipe, not the sheet
+      m.axis = "y";
+    }
     const dy = e.clientY - m.lastY;
     if (!dy) return;
     m.total += Math.abs(dy);
