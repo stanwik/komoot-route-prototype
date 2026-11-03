@@ -14,7 +14,7 @@ Then open http://localhost:8000. GitHub Pages works too. The map needs an intern
 
 ## Using it in a test
 
-- The **Test state** panel next to the phone shows the routes list in a state (Cold start, High confidence, Low confidence, No result, Error, Waiting) and sets what the next search returns. Default: High confidence. Picking Cold start makes the next search return High confidence. Picking Waiting keeps a search in waiting until Cancel.
+- The **Test state** panel next to the phone shows the routes list in a state (Cold start, High confidence, Low confidence, No result, Error, Waiting) and sets what the next search returns. The page opens in Cold start. Picking Cold start makes the next search return High confidence. Picking Waiting keeps a search in waiting until Cancel.
 - A search waits 0.8 s, shows the waiting state, then the picked state after 4 s.
 - Only the Rummelsburger Bay loop card opens route detail.
 
