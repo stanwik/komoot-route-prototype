@@ -284,11 +284,6 @@ const URLP = {
   switcher: P.get("switcher") === "1",
   task: ["1", "2", "3"].includes(P.get("task")) ? P.get("task") : null
 };
-// Tag the Clarity session with the task and the state on every page load.
-if (typeof window.clarity === "function") {
-  if (URLP.task) window.clarity("set", "task", URLP.task);
-  window.clarity("set", "state", URLP.state);
-}
 const FROM_PAGES = ["tips", "report", "report-received"];
 function pageURL(page, extra = {}) {
   const u = new URLSearchParams();

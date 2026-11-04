@@ -14,8 +14,8 @@ Then open http://localhost:8000. GitHub Pages works too. The map needs an intern
 
 ## Two versions
 
-- **Test version (multi-page):** every screen is its own page with its own URL. Every page loads Microsoft Clarity. The state switcher is hidden.
-- **`in-person.html`:** the single-page version used for moderated sessions, with the state switcher always visible. No Clarity.
+- **Test version (multi-page):** every screen is its own page with its own URL. Every page loads the Useberry snippet (last item in `<body>`); it only runs inside a Useberry test. The state switcher is hidden.
+- **`in-person.html`:** the single-page version used for moderated sessions, with the state switcher always visible. No Useberry snippet.
 
 ### Pages
 
@@ -37,7 +37,7 @@ All pages share `app.css` and `app.js` (styles, screen markup and behaviour).
 
 - `state`: `cold_start` (default), `high`, `low`, `no_result`, `error` or `waiting`. It sets the routes list and what a search returns. A search from Cold start returns High confidence.
 - `q`: the search text. Without it, every state except `cold_start` shows "Quiet hike along the water".
-- `task`: `1`, `2` or `3`. Carried to every page; each page load tags the Clarity session with `task` and `state`.
+- `task`: `1`, `2` or `3`. Carried to every page.
 - `switcher=1`: shows the Test state switcher, for example `index.html?switcher=1` or `index.html?state=low&switcher=1`.
 - Set by the pages themselves and carried along: `view=cancelled` (after Cancel), `view=nearby` (after ✕ on the results screen), `banner=0` (after Dismiss), `from=saved` (tips and report opened from the saved route).
 
