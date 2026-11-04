@@ -2,7 +2,7 @@
 /* ================= Shared page markup (the same on every page) ================= */
 const SHELL = `
 
-<aside class="switcher" aria-label="Prototype state switcher">
+<aside class="switcher" aria-label="Prototype state switcher" hidden>
   <h2>Test state</h2>
   <p>Shows the routes list in this state and sets what the next search returns.</p>
   <fieldset id="stateSwitch">
@@ -266,7 +266,9 @@ const MARKER_POS = {
   "Rummelsburger Bay loop": [13.4880, 52.4960],
   "Treptower Park loop": [13.4690, 52.4880],
   "Spree riverside walk": [13.4700, 52.4950],
-  "Rummelsburger See and Plänterwald trails": [13.4870, 52.4810]
+  "Rummelsburger See and Plänterwald trails": [13.4870, 52.4810],
+  "Wuhlheide forest loop": [13.5000, 52.4850],
+  "Volkspark Friedrichshain walk": [13.4740, 52.4970]
 };
 const MARKER_COLORS = ["#2D5BD3", "#8C7FDB", "#A3372A", "#4A3A2E"];
 // Three photos per route, the same everywhere that route appears (card, detail, saved route).
@@ -274,8 +276,18 @@ const ROUTE_PHOTOS = {
   "Rummelsburger Bay loop": ["lake-reeds.jpg", "lake-reeds-sunset.jpg", "pond-reeds.jpg"],
   "Treptower Park loop": ["lake-trees-reflection.jpg", "meadow-path.jpg", "forest-path-autumn.jpg"],
   "Spree riverside walk": ["river-trees-reflection.jpg", "lake-calm-forest.jpg", "lake-forest-view.jpg"],
-  "Rummelsburger See and Plänterwald trails": ["forest-path-green.jpg", "forest-path-pine.jpg", "forest-light.jpg"]
+  "Rummelsburger See and Plänterwald trails": ["forest-path-green.jpg", "forest-path-pine.jpg", "forest-light.jpg"],
+  "Wuhlheide forest loop": ["forest-path-pine.jpg", "forest-light.jpg", "forest-path-green.jpg"],
+  "Volkspark Friedrichshain walk": ["meadow-path.jpg", "forest-path-autumn.jpg"]
 };
+// Cold start ("Popular hikes nearby", before any search): two ordinary walks with no water and no screens behind them,
+// so the only way to a water route is describing it in the search bar.
+const COLD_ROUTES = [
+  { title: "Wuhlheide forest loop", difficulty: "Easy", route_type: "Loop", rating: 4.7, rating_count: 1480, photo_count: 212,
+    duration_min: 95, distance_km: 6.2, elevation_gain_m: 30, elevation_loss_m: 30, ai: null },
+  { title: "Volkspark Friedrichshain walk", difficulty: null, route_type: null, rating: 4.6, rating_count: 2010, photo_count: null,
+    duration_min: 65, distance_km: 4.1, elevation_gain_m: 25, elevation_loss_m: null, ai: null }
+];
 const photo = (file, cls = "realphoto") => `<img class="${cls}" src="images/${file}" alt="" draggable="false">`;
 const AVATAR_COLORS = ["#5C6F2B", "#8A5A3C", "#3F6E8C", "#6B5B95", "#9A6B1F"];
 const REASONS = [
@@ -512,7 +524,7 @@ function payloadFor(view) {
 function visibleRoutes() {
   if (S.view === "waiting") return [];
   const p = S.data[payloadFor(S.view)];
-  return S.view === "cold" ? p.routes.slice(0, 2) : p.routes;
+  return S.view === "cold" ? COLD_ROUTES : p.routes;
 }
 function renderSearchbar() {
   const q = S.query;
