@@ -27,6 +27,7 @@ Then open http://localhost:8000. GitHub Pages works too. The map needs an intern
 | `tips.html` | What people say |
 | `report.html` | What's wrong with this summary? |
 | `report-received.html` | Report received |
+| `shared.html` | Route shared (after Share on route detail or saved route) |
 | `saved.html` | Route saved sheet over route detail |
 | `saved-route.html` | Saved route |
 | `navigation.html` | Navigation started |

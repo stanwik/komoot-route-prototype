@@ -58,7 +58,7 @@ const SHELL = `
       <div class="hero">
         <div class="carousel" data-slot="carousel"></div>
         <button class="roundbtn glass icon-btn tl" data-action="back" aria-label="Back"><svg class="i" viewBox="0 0 24 24"><use href="#ic-back"/></svg></button>
-        <div class="tr glass"><button class="icon-btn" data-action="noop" aria-label="Share"><svg class="i" viewBox="0 0 24 24"><use href="#ic-share"/></svg></button><button class="icon-btn" data-action="noop" aria-label="More options"><svg class="i" viewBox="0 0 24 24"><use href="#ic-more"/></svg></button></div>
+        <div class="tr glass"><button class="icon-btn" data-action="share" aria-label="Share"><svg class="i" viewBox="0 0 24 24"><use href="#ic-share"/></svg></button><button class="icon-btn" data-action="noop" aria-label="More options"><svg class="i" viewBox="0 0 24 24"><use href="#ic-more"/></svg></button></div>
         <div class="photocount" data-slot="photocount"></div>
         <div class="dots" data-slot="dots"></div>
         <div class="minimap" id="detailMini" aria-hidden="true"></div>
@@ -79,7 +79,7 @@ const SHELL = `
       <div class="hero">
         <div class="carousel" data-slot="carousel"></div>
         <button class="roundbtn glass icon-btn tl" data-action="back" aria-label="Back"><svg class="i" viewBox="0 0 24 24"><use href="#ic-back"/></svg></button>
-        <div class="tr glass"><button class="icon-btn" data-action="noop" aria-label="Share"><svg class="i" viewBox="0 0 24 24"><use href="#ic-share"/></svg></button><button class="icon-btn" data-action="noop" aria-label="More options"><svg class="i" viewBox="0 0 24 24"><use href="#ic-more"/></svg></button></div>
+        <div class="tr glass"><button class="icon-btn" data-action="share" aria-label="Share"><svg class="i" viewBox="0 0 24 24"><use href="#ic-share"/></svg></button><button class="icon-btn" data-action="noop" aria-label="More options"><svg class="i" viewBox="0 0 24 24"><use href="#ic-more"/></svg></button></div>
         <div class="photocount" data-slot="photocount"></div>
         <div class="dots" data-slot="dots"></div>
         <div class="minimap" id="savedMini" aria-hidden="true"></div>
@@ -121,6 +121,25 @@ const SHELL = `
       </svg>
       <h1>Report received</h1>
       <p>Thanks for telling us. Your report helps keep route summaries accurate for everyone.</p>
+      <button class="btn-main" data-action="back-to-route">Back to route</button>
+    </div>
+  </section>
+
+  <!-- ===== Route shared ===== -->
+  <section class="screen" id="shared" tabindex="-1" aria-label="Route shared">
+    <div class="received">
+      <svg width="200" height="160" viewBox="0 0 200 160" aria-hidden="true">
+        <rect x="0" y="0" width="200" height="160" rx="24" fill="#E4E6C4"/>
+        <path d="M0 118 Q50 92 100 112 T200 104 V136 Q200 160 176 160 H24 Q0 160 0 136Z" fill="#B0B889"/>
+        <path d="M0 132 Q60 120 120 134 T200 128 V136 Q200 160 176 160 H24 Q0 160 0 136Z" fill="#8FA066"/>
+        <path d="M70 150 Q96 128 92 112 Q90 100 104 96" fill="none" stroke="#2B6BEA" stroke-width="4" stroke-linecap="round"/>
+        <rect x="58" y="22" width="90" height="62" rx="16" fill="#fff"/>
+        <path d="M80 84 L76 100 L96 84Z" fill="#fff"/>
+        <circle cx="103" cy="53" r="18" fill="#4F6814"/>
+        <path d="M94 53 l6 6 l12 -12" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h1>Route shared</h1>
+      <p>We sent <b id="sharedName"></b> to your friend.</p>
       <button class="btn-main" data-action="back-to-route">Back to route</button>
     </div>
   </section>
@@ -269,7 +288,7 @@ const REASONS = [
 /* ================= Pages + state in the URL ================= */
 // Each screen is its own page. ?state= picks the scenario (default cold_start); q, view, banner, from, switcher and task carry over.
 const PAGE = document.body.dataset.page || "index";
-const PAGE_SCREEN = { index: "routes", search: "search", route: "detail", tips: "wps", report: "report", "report-received": "received", saved: "detail", "saved-route": "saved", navigation: "nav" };
+const PAGE_SCREEN = { index: "routes", search: "search", route: "detail", tips: "wps", report: "report", "report-received": "received", saved: "detail", "saved-route": "saved", navigation: "nav", shared: "shared" };
 const STATE_IN = { cold_start: "cold", high: "high", low: "low", no_result: "no_result", error: "error", waiting: "waiting" };
 const STATE_OUT = { cold: "cold_start", high: "high", low: "low", no_result: "no_result", error: "error", waiting: "waiting" };
 const P = new URLSearchParams(location.search);
@@ -284,7 +303,7 @@ const URLP = {
   switcher: P.get("switcher") === "1",
   task: ["1", "2", "3"].includes(P.get("task")) ? P.get("task") : null
 };
-const FROM_PAGES = ["tips", "report", "report-received"];
+const FROM_PAGES = ["tips", "report", "report-received", "shared"];
 function pageURL(page, extra = {}) {
   const u = new URLSearchParams();
   u.set("state", STATE_OUT[S.nextState]);
@@ -831,6 +850,7 @@ const actions = {
   "see-tips"() { nav("tips", { from: PAGE === "saved-route" ? "saved" : null }, "push"); },
   "thumb-up"(el) { S.thumbsUp = !S.thumbsUp; el.setAttribute("aria-pressed", String(S.thumbsUp)); },
   "thumb-down"() { nav("report", {}, "push"); },
+  share() { nav("shared", { from: PAGE === "saved-route" ? "saved" : null }, "push"); },
   "submit-report"() { if (S.reason == null) return; nav("report-received", {}, "push"); },
   "back-to-route"() { nav(URLP.from === "saved" ? "saved-route" : "route", {}, "pop"); },
   save() {                                          // the sheet slides up as before, then the Route saved page loads
@@ -1020,6 +1040,7 @@ function renderPage() {
     show(screen, screen === "search" ? "#searchInput" : null);
     if (PAGE === "search" && URLP.clear) { $("#searchInput").value = ""; syncGo(); }
     if (PAGE === "saved") openSheetInstantly();
+    if (PAGE === "shared" && S.route) $("#sharedName").textContent = S.route.title;
   }
 }
 function bootPage() {
