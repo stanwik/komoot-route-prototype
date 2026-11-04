@@ -1004,6 +1004,16 @@ function dragBy(dy) {
   sh.addEventListener("click", e => { if (swallowClick) { e.stopPropagation(); e.preventDefault(); swallowClick = false; } }, true);
 })();
 
+/* ================= Fit the phone to short desktop windows ================= */
+// On desktop the 852 px phone is scaled down so the whole frame fits the window height (e.g. a 1280x800 test viewport).
+function fitPhone() {
+  const ph = $("#phone"); if (!ph) return;
+  const z = innerWidth > 720 ? Math.min(1, (innerHeight - 64 - 22) / 852) : 1;
+  ph.style.zoom = z < 1 ? String(Math.round(z * 1000) / 1000) : "";
+}
+fitPhone();
+addEventListener("resize", fitPhone);
+
 /* ================= Boot ================= */
 Promise.all(["high_confidence", "low_confidence", "no_result", "error"].map(n =>
   fetch(`data/${n}.json`).then(r => { if (!r.ok) throw new Error(n); return r.json(); }).then(j => [n, j])))
