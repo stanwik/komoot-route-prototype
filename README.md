@@ -39,7 +39,7 @@ All pages share `app.css` and `app.js` (styles, screen markup and behaviour).
 - `q`: the search text. Without it, every state except `cold_start` shows "Quiet hike along the water".
 - `task`: `1`, `2` or `3`. Carried to every page; each page load tags the Clarity session with `task` and `state`.
 - `switcher=1`: shows the Test state switcher, for example `index.html?switcher=1` or `index.html?state=low&switcher=1`.
-- Set by the pages themselves and carried along: `view=cancelled` (after Cancel), `banner=0` (after Dismiss), `from=saved` (tips and report opened from the saved route).
+- Set by the pages themselves and carried along: `view=cancelled` (after Cancel), `view=nearby` (after ✕ on the results screen), `banner=0` (after Dismiss), `from=saved` (tips and report opened from the saved route).
 
 `state`, `q`, `switcher` and `task` carry over to every page the tester moves to.
 

@@ -276,7 +276,7 @@ const P = new URLSearchParams(location.search);
 const URLP = {
   state: STATE_IN[P.get("state")] ? P.get("state") : "cold_start",
   q: P.get("q"),
-  view: P.get("view") === "cancelled" ? "cancelled" : null,
+  view: ["cancelled", "nearby"].includes(P.get("view")) ? P.get("view") : null,
   banner: P.get("banner") !== "0",
   from: P.get("from") === "saved" ? "saved" : null,
   run: P.get("run") === "1",
@@ -295,6 +295,7 @@ function pageURL(page, extra = {}) {
   u.set("state", STATE_OUT[S.nextState]);
   if (S.query) u.set("q", S.query);
   if (S.view === "cancelled") u.set("view", "cancelled");
+  if (S.view === "cold" && S.nextState !== "cold" && !S.query) u.set("view", "nearby");
   if (!S.bannerOpen) u.set("banner", "0");
   const from = "from" in extra ? extra.from : (FROM_PAGES.includes(page) ? URLP.from : null);
   if (from && FROM_PAGES.includes(page)) u.set("from", from);
@@ -817,7 +818,7 @@ const actions = {
   noop() {},
   back() { nav(PAGE === "tips" ? (URLP.from === "saved" ? "saved-route" : "route") : (BACK_TO[PAGE] || "index"), {}, "pop"); },
   "open-search"() { nav("search", {}, "push"); },
-  "clear-search"() { nav("search", { clear: 1 }, "push"); },
+  "clear-search"() { clearTimers(); S.query = ""; S.view = "cold"; S.bannerOpen = true; renderRoutes(); syncURL(); $("#routes").focus(); },
   "edit-search"() { nav("search", {}, "push"); },
   "clear-input"() { const i = $("#searchInput"); i.value = ""; syncGo(); i.focus(); },
   example(el) { runSearch(el.dataset.q); },
@@ -996,8 +997,12 @@ Promise.all(["high_confidence", "low_confidence", "no_result", "error"].map(n =>
 
 function initFromURL() {
   S.nextState = STATE_IN[URLP.state];
-  S.query = URLP.q != null ? URLP.q : (S.nextState === "cold" ? "" : DEFAULT_QUERY);
-  S.view = URLP.view || (S.nextState === "cold" && S.query ? resolveState("cold") : S.nextState);
+  if (URLP.view === "nearby") {                     // after ✕ on the results screen: nearby hikes, no query, state kept
+    S.query = ""; S.view = "cold";
+  } else {
+    S.query = URLP.q != null ? URLP.q : (S.nextState === "cold" ? "" : DEFAULT_QUERY);
+    S.view = URLP.view || (S.nextState === "cold" && S.query ? resolveState("cold") : S.nextState);
+  }
   S.bannerOpen = URLP.banner;
   S.route = routeForView(S.view);
   S.routeIsLow = S.view === "low";
